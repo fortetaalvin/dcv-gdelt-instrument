@@ -20,9 +20,9 @@ Nigerian cases, 2014–2024.
 | Path | Contents |
 |---|---|
 | `dcv/` | The retrieval and analysis package — every API client, the provenance store, detection, and the construct implementations |
-| `data/provenance.sqlite` | **4,943 logged retrievals**: endpoint, full parameters, response SHA-256, outcome. Plus case specifications and 4,009 daily aggregates |
+| `data/provenance.sqlite` | **4,943 logged retrievals**: endpoint, full parameters, response SHA-256, outcome. Plus 13 versioned case specifications (12 cases + 1 continuous-series holder) and 4,009 daily aggregates |
 | `preregistration/` | Pre-registration documents for all three rounds, each written before the run it governs |
-| `cases/` | Case specification files as JSON, both versions of each (v1 original, v2 after keyword repair) |
+| `cases/` | 12 case specification files as JSON — six cases, both versions of each (v1 original, v2 after keyword repair) |
 | `probes/` | Re-executable boundary probes for methods paper §4.2, plus a recorded run |
 | `protocol/` | The thirteen-step validation protocol as a runnable checker, not prose |
 | `scripts/` | Ingestion and analysis drivers for each round |

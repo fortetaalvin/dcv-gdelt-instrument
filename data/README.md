@@ -7,7 +7,7 @@ The audit trail. Three tables, no raw GDELT content.
 | Table | Rows | Contents |
 |---|---|---|
 | `pulls` | 4,943 | One row per retrieval: `endpoint`, `params_json`, `http_status`, `record_count`, `response_sha256`, `outcome`, `started_at`, `finished_at` |
-| `cases` | 13 | Versioned case specifications. A keyword revision creates a new version rather than mutating the old one |
+| `cases` | 13 | Versioned case specifications: **12** are six cases x two keyword versions; the thirteenth (`nigeria_continuous`) is a provenance holder for the continuous pull, not a case. A keyword revision creates a new version rather than mutating the old one |
 | `daily_counts` | 4,009 | Daily aggregates for Nigeria, 2014-01-01 to 2024-12-31: total, protest, conflict, fight and assault event counts, mention-weighted Goldstein numerator/denominator, tone sum and n |
 
 `outcome` is one of `success`, `empty`, `rejected`, `rate_limited`, `error`.

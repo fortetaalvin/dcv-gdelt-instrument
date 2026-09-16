@@ -10,8 +10,9 @@ findings paper on narrative crisis detection across six Nigerian cases,
 - **Retrieval and analysis package** (`dcv/`) — API clients for GDELT DOC 2.0,
   GKG v1 and Events 1.0; provenance store; detection; construct implementations
 - **Provenance database** (`data/provenance.sqlite`, 2.19 MB) — 4,943 logged
-  retrievals with endpoint, full parameters, response SHA-256 and outcome; 13
-  versioned case specifications; 4,009 daily aggregates
+  retrievals with endpoint, full parameters, response SHA-256 and outcome; 12
+  versioned case specifications (six cases x two keyword versions) plus one
+  provenance holder for the continuous series; 4,009 daily aggregates
 - **Pre-registration documents** for all three rounds, each written before the
   run it governs
 - **Case specification files** (`cases/`) — both versions of each case, before
