@@ -5,14 +5,29 @@
   "access_right": "open",
   "license": "MIT",
   "creators": [
-    {"name": "Forteta, Alvin O.", "affiliation": "Digital River Technologies Ltd."}
+    {
+      "name": "Forteta, Alvin O.",
+      "affiliation": "AUN Coding Hub / Digital River Technologies Ltd., Nigeria"
+    }
   ],
   "keywords": [
-    "GDELT", "research instruments", "computational social science",
-    "conflict early warning", "measurement validity", "keyword construction",
-    "reproducibility", "link rot", "Nigeria"
+    "GDELT",
+    "research instruments",
+    "computational social science",
+    "conflict early warning",
+    "measurement validity",
+    "keyword construction",
+    "reproducibility",
+    "link rot",
+    "Nigeria"
   ],
   "related_identifiers": [
-    {"relation": "isSupplementTo", "identifier": "https://github.com/fortetaalvin/dcv-gdelt-instrument", "scheme": "url"}
-  ]
+    {
+      "relation": "isSupplementTo",
+      "identifier": "https://github.com/fortetaalvin/dcv-gdelt-instrument",
+      "scheme": "url"
+    }
+  ],
+  "version": "1.0.0",
+  "language": "eng"
 }
