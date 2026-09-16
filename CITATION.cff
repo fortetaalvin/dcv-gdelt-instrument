@@ -12,6 +12,14 @@ authors:
     affiliation: AUN Coding Hub / Digital River Technologies Ltd.
     orcid: "https://orcid.org/0009-0001-3646-2261"
 repository-code: "https://github.com/fortetaalvin/dcv-gdelt-instrument"
+doi: 10.5281/zenodo.22801923
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22801923
+    description: "Concept DOI — all versions"
+  - type: doi
+    value: 10.5281/zenodo.22801924
+    description: "Version DOI — v1.0.0"
 license: MIT
 version: 1.0.0
 date-released: "2026-09-16"

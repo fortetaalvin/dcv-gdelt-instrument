@@ -8,7 +8,7 @@ Replication materials for:
 and for the companion findings paper on narrative crisis detection across six
 Nigerian cases, 2014–2024.
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.PENDING.svg)](https://doi.org/10.5281/zenodo.PENDING)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22801923.svg)](https://doi.org/10.5281/zenodo.22801923)
 
 **Repository:** `github.com/fortetaalvin/dcv-gdelt-instrument` ·
 **Working locations and open items:** [`CONTINUITY.md`](CONTINUITY.md)
@@ -153,3 +153,8 @@ repository redistributes none of it.
 ## Citation
 
 See `CITATION.cff`, or cite the Zenodo DOI above.
+
+- **Concept DOI** (always resolves to the latest version): [`10.5281/zenodo.22801923`](https://doi.org/10.5281/zenodo.22801923)
+- **Version DOI** (this snapshot, v1.0.0): [`10.5281/zenodo.22801924`](https://doi.org/10.5281/zenodo.22801924)
+
+Cite the concept DOI unless you need to pin an exact snapshot.

@@ -9,7 +9,7 @@ the working copies are and what is outstanding.
 | What | Where |
 |---|---|
 | **Repository (authoritative)** | `github.com/fortetaalvin/dcv-gdelt-instrument` |
-| Zenodo archive | minted on first release; DOI replaces `zenodo.PENDING` in `README.md` |
+| Zenodo archive | concept DOI `10.5281/zenodo.22801923` (all versions) · v1.0.0 `10.5281/zenodo.22801924` |
 | Working copy of this repo | `/var/www/html/dcv-repo` (Contabo VPS) |
 | Live project directory | `/var/www/html/dcv` — full store including raw records |
 | Live dashboard | `dcv.forteta.ng` (Apache vhost, DocumentRoot `/var/www/html/dcv/web`) |
@@ -69,8 +69,9 @@ instrument defects documented.
 4. **TSI in its own domain.** The index was built for closed trusted
    micro-publics where quietness signals danger, not open media. Testing it
    against the Mubi fieldwork is a different project.
-5. **DOI.** Replace `zenodo.PENDING` in `README.md` and in the methods paper's
-   §9 once the first release is archived.
+5. **Future releases.** Each new release mints a new version DOI under the same
+   concept DOI. Cite the concept DOI; pin the version DOI only for an exact
+   snapshot.
 
 ## Conventions that are load-bearing
 
