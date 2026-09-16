@@ -13,6 +13,6 @@
     "reproducibility", "link rot", "Nigeria"
   ],
   "related_identifiers": [
-    {"relation": "isSupplementTo", "identifier": "https://github.com/REPLACE_ME/dcv-gdelt-instrument", "scheme": "url"}
+    {"relation": "isSupplementTo", "identifier": "https://github.com/fortetaalvin/dcv-gdelt-instrument", "scheme": "url"}
   ]
 }

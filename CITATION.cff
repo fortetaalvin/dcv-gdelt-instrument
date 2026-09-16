@@ -10,7 +10,7 @@ authors:
     family-names: Forteta
     email: forteta.alvin@aun.edu.ng
     affiliation: Digital River Technologies Ltd.
-repository-code: "https://github.com/REPLACE_ME/dcv-gdelt-instrument"
+repository-code: "https://github.com/fortetaalvin/dcv-gdelt-instrument"
 license: MIT
 version: 1.0.0
 date-released: "2026-09-16"

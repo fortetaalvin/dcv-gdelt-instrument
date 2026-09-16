@@ -10,6 +10,9 @@ Nigerian cases, 2014–2024.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.PENDING.svg)](https://doi.org/10.5281/zenodo.PENDING)
 
+**Repository:** `github.com/fortetaalvin/dcv-gdelt-instrument` ·
+**Working locations and open items:** [`CONTINUITY.md`](CONTINUITY.md)
+
 ---
 
 ## What this repository contains
