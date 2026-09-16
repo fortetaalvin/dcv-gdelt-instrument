@@ -10,6 +10,7 @@ authors:
     family-names: Forteta
     email: forteta.alvin@aun.edu.ng
     affiliation: AUN Coding Hub / Digital River Technologies Ltd.
+    orcid: "https://orcid.org/0009-0001-3646-2261"
 repository-code: "https://github.com/fortetaalvin/dcv-gdelt-instrument"
 license: MIT
 version: 1.0.0
@@ -30,4 +31,5 @@ references:
       - given-names: Alvin
         name-particle: O.
         family-names: Forteta
+        orcid: "https://orcid.org/0009-0001-3646-2261"
     year: 2026
