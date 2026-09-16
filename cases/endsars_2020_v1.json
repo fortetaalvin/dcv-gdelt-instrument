@@ -1,0 +1,26 @@
+{
+  "slug": "endsars_2020",
+  "version": 1,
+  "display_name": "#EndSARS protest movement",
+  "incident_type": "protest movement",
+  "regions": [
+    "Lagos",
+    "Nigeria"
+  ],
+  "window_start": "2020-07-01",
+  "window_end": "2020-12-31",
+  "trigger_dates": [
+    "2020-10-20"
+  ],
+  "keywords": [
+    "EndSARS",
+    "SARS Nigeria",
+    "police brutality Nigeria",
+    "Lekki"
+  ],
+  "keywords_status": "approved",
+  "lead_time_days": 14,
+  "model_direction": "A",
+  "notes": "Model A (narrative precedes crisis). Ingested via BOTH GKG v1 (comparability with Chibok) and DOC 2.0 (robustness check). Note: bare keyword 'SARS' collides with SARS-CoV-2 in 2020.",
+  "created_at": "2026-09-15T12:32:14+00:00"
+}

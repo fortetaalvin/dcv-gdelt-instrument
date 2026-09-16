@@ -1,0 +1,145 @@
+[
+  {
+    "file": "chibok_2014_v1.json",
+    "slug": "chibok_2014",
+    "version": 1,
+    "keywords": [
+      "Chibok",
+      "Boko Haram",
+      "schoolgirls abduction",
+      "Borno"
+    ],
+    "status": "approved"
+  },
+  {
+    "file": "chibok_2014_v2.json",
+    "slug": "chibok_2014",
+    "version": 2,
+    "keywords": [
+      "Chibok",
+      "Boko Haram",
+      "Borno",
+      "KIDNAP"
+    ],
+    "status": "approved_v3"
+  },
+  {
+    "file": "election_2023_v1.json",
+    "slug": "election_2023",
+    "version": 1,
+    "keywords": [
+      "INEC",
+      "election protest",
+      "Obidient",
+      "presidential election Nigeria"
+    ],
+    "status": "approved"
+  },
+  {
+    "file": "election_2023_v2.json",
+    "slug": "election_2023",
+    "version": 2,
+    "keywords": [
+      "INEC",
+      "Obidient",
+      "PROTEST",
+      "ELECTION"
+    ],
+    "status": "approved_v3"
+  },
+  {
+    "file": "endbadgov_2024_v1.json",
+    "slug": "endbadgov_2024",
+    "version": 1,
+    "keywords": [
+      "EndBadGovernance",
+      "hunger protest",
+      "Nigeria protest",
+      "fuel subsidy"
+    ],
+    "status": "approved"
+  },
+  {
+    "file": "endbadgov_2024_v2.json",
+    "slug": "endbadgov_2024",
+    "version": 2,
+    "keywords": [
+      "EndBadGovernance",
+      "PROTEST",
+      "ECON_INFLATION"
+    ],
+    "status": "approved_v3"
+  },
+  {
+    "file": "endsars_2020_v1.json",
+    "slug": "endsars_2020",
+    "version": 1,
+    "keywords": [
+      "EndSARS",
+      "SARS Nigeria",
+      "police brutality Nigeria",
+      "Lekki"
+    ],
+    "status": "approved"
+  },
+  {
+    "file": "endsars_2020_v2.json",
+    "slug": "endsars_2020",
+    "version": 2,
+    "keywords": [
+      "EndSARS",
+      "Lekki",
+      "SECURITY_SERVICES",
+      "UNREST_POLICEBRUTALITY"
+    ],
+    "status": "approved_v3"
+  },
+  {
+    "file": "kankara_2020_v1.json",
+    "slug": "kankara_2020",
+    "version": 1,
+    "keywords": [
+      "Kankara",
+      "Katsina",
+      "banditry",
+      "schoolboys abduction"
+    ],
+    "status": "approved"
+  },
+  {
+    "file": "kankara_2020_v2.json",
+    "slug": "kankara_2020",
+    "version": 2,
+    "keywords": [
+      "Kankara",
+      "Katsina",
+      "banditry",
+      "KIDNAP"
+    ],
+    "status": "approved_v3"
+  },
+  {
+    "file": "plateau_2018_v1.json",
+    "slug": "plateau_2018",
+    "version": 1,
+    "keywords": [
+      "Plateau",
+      "Barkin Ladi",
+      "Jos",
+      "herder farmer"
+    ],
+    "status": "approved"
+  },
+  {
+    "file": "plateau_2018_v2.json",
+    "slug": "plateau_2018",
+    "version": 2,
+    "keywords": [
+      "Plateau",
+      "Barkin Ladi",
+      "Jos",
+      "ARMEDCONFLICT"
+    ],
+    "status": "approved_v3"
+  }
+]

@@ -1,0 +1,21 @@
+# Credentials — never commit
+docker/.env
+.env
+*.pem
+*.key
+logs/.acled_token.json
+
+# Raw GDELT data: deliberately excluded (see README)
+data/dcv.sqlite
+data/dcv.sqlite-*
+data/*.csv
+data/*.zip
+*.gkg.csv
+*.export.CSV
+
+# Generated
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+logs/*.log
+logs/.gdelt_last_call

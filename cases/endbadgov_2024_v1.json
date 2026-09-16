@@ -1,0 +1,27 @@
+{
+  "slug": "endbadgov_2024",
+  "version": 1,
+  "display_name": "#EndBadGovernance hunger protests",
+  "incident_type": "economic-trigger crisis",
+  "regions": [
+    "Kano",
+    "Abuja",
+    "Nigeria"
+  ],
+  "window_start": "2024-06-13",
+  "window_end": "2024-08-27",
+  "trigger_dates": [
+    "2024-08-01"
+  ],
+  "keywords": [
+    "EndBadGovernance",
+    "hunger protest",
+    "Nigeria protest",
+    "fuel subsidy"
+  ],
+  "keywords_status": "approved",
+  "lead_time_days": 14,
+  "model_direction": "A",
+  "notes": "Mobilisational, unscheduled crisis. Predicted Model A, >=14d.",
+  "created_at": "2026-09-15T22:23:04+00:00"
+}

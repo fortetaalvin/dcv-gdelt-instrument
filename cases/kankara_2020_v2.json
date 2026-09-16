@@ -1,0 +1,26 @@
+{
+  "slug": "kankara_2020",
+  "version": 2,
+  "display_name": "Kankara schoolboys abduction",
+  "incident_type": "banditry/kidnapping",
+  "regions": [
+    "Katsina",
+    "Nigeria"
+  ],
+  "window_start": "2020-10-23",
+  "window_end": "2021-01-06",
+  "trigger_dates": [
+    "2020-12-11"
+  ],
+  "keywords": [
+    "Kankara",
+    "Katsina",
+    "banditry",
+    "KIDNAP"
+  ],
+  "keywords_status": "approved_v3",
+  "lead_time_days": null,
+  "model_direction": "B",
+  "notes": "Clandestine. Predicted Model B. Pre-registered 2026-09-16. | keywords repaired v3 (2026-09-16).",
+  "created_at": "2026-09-16T00:54:03+00:00"
+}

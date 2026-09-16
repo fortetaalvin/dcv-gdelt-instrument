@@ -1,0 +1,27 @@
+{
+  "slug": "election_2023",
+  "version": 1,
+  "display_name": "2023 presidential election result protests",
+  "incident_type": "protest movement",
+  "regions": [
+    "Abuja",
+    "Lagos",
+    "Nigeria"
+  ],
+  "window_start": "2023-01-11",
+  "window_end": "2023-03-27",
+  "trigger_dates": [
+    "2023-03-01"
+  ],
+  "keywords": [
+    "INEC",
+    "election protest",
+    "Obidient",
+    "presidential election Nigeria"
+  ],
+  "keywords_status": "approved",
+  "lead_time_days": 14,
+  "model_direction": "A",
+  "notes": "Mobilisational. Predicted Model A, >=14d. CONFOUND recorded in advance: anchored on a scheduled event, so a positive lead may measure calendar anticipation rather than crisis anticipation.",
+  "created_at": "2026-09-15T22:23:04+00:00"
+}

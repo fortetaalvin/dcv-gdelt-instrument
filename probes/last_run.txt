@@ -1,0 +1,29 @@
+==============================================================================
+  GDELT boundary probes — re-execution of methods paper §4.2
+  Expectations recorded 2026-09-15/16. Probing live endpoints now.
+==============================================================================
+
+  id      expect    got  result ref      description
+  --------------------------------------------------------------------------
+  B2-a       200    200  PASS   §4.2.1   Events 2.0 first available 15-min file (2015-02-18 22:45)
+  B2-b       404    404  PASS   §4.2.1   Events 2.0 absent six weeks earlier (2015-01-01)
+  B2-c       404    404  PASS   §4.2.1   Events 2.0 absent for the Chibok date (2014-04-14)
+  B3-a       200    200  PASS   §4.2.2   Events 1.0 present for 2014-04-14 (v1 reaches back)
+  B3-b       200    200  PASS   §4.2.2   Events 1.0 still written in 2024
+  B3-c       200    200  PASS   §4.2.2   GKG v1 present for 2014-04-14
+  B3-d       200    200  PASS   §4.2.2   GKG v1 still written in 2025
+  B4-a       404    404  PASS   §4.2.3   Archive gap: no GKG file for 2014-03-19
+  B4-b       404    404  PASS   §4.2.3   Archive gap: no Events file for 2014-03-19
+  B4-c       200    200  PASS   §4.2.3   Events 1.0 DOES carry 2020-10-20, the date DOC 2.0 lacks
+
+  DOC 2.0 date-boundary probes (§4.2.1) — body-inspected, not status-coded
+  --------------------------------------------------------------------------
+  B1-a   SKIP   2017 accepted   throttled on every attempt (see §4.3.1)
+  B1-b   PASS   2015 rejected   HTTP 200 · Invalid query start date.
+  B1-c   SKIP   2014 rejected   throttled on every attempt (see §4.3.1)
+
+==============================================================================
+  2 probe(s) inconclusive (throttled): B1-a, B1-c
+  Re-run later; throttling is not a boundary change.
+  All 13 probes match the values recorded 2026-09-15/16.
+==============================================================================

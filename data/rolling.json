@@ -1,0 +1,110 @@
+{
+ "chibok_2014": {
+  "evaluable": true,
+  "observed_days": 47,
+  "alarms_total": 1,
+  "alarm_rate_per_100d": 2.13,
+  "hit": false,
+  "lead_days": null,
+  "alarms_in_lead_window": 0,
+  "alarms_too_early": 0,
+  "alarms_after_trigger": 1,
+  "alarms": [
+   {
+    "day": "2014-05-01",
+    "value": 64.0,
+    "threshold": 51.999,
+    "baseline_mean": 21.5714,
+    "baseline_sd": 15.2138,
+    "days_before_trigger": -17
+   }
+  ]
+ },
+ "kankara_2020": {
+  "evaluable": true,
+  "observed_days": 48,
+  "alarms_total": 0,
+  "alarm_rate_per_100d": 0.0,
+  "hit": false,
+  "lead_days": null,
+  "alarms_in_lead_window": 0,
+  "alarms_too_early": 0,
+  "alarms_after_trigger": 0,
+  "alarms": []
+ },
+ "plateau_2018": {
+  "evaluable": true,
+  "observed_days": 48,
+  "alarms_total": 1,
+  "alarm_rate_per_100d": 2.08,
+  "hit": false,
+  "lead_days": null,
+  "alarms_in_lead_window": 0,
+  "alarms_too_early": 0,
+  "alarms_after_trigger": 1,
+  "alarms": [
+   {
+    "day": "2018-07-02",
+    "value": 100.0,
+    "threshold": 81.0083,
+    "baseline_mean": 39.1786,
+    "baseline_sd": 20.9149,
+    "days_before_trigger": -9
+   }
+  ]
+ },
+ "endsars_2020": {
+  "evaluable": true,
+  "observed_days": 48,
+  "alarms_total": 1,
+  "alarm_rate_per_100d": 2.08,
+  "hit": true,
+  "lead_days": 11,
+  "alarms_in_lead_window": 1,
+  "alarms_too_early": 0,
+  "alarms_after_trigger": 0,
+  "alarms": [
+   {
+    "day": "2020-10-09",
+    "value": 135.0,
+    "threshold": 86.9195,
+    "baseline_mean": 39.5714,
+    "baseline_sd": 23.674,
+    "days_before_trigger": 11
+   }
+  ]
+ },
+ "election_2023": {
+  "evaluable": true,
+  "observed_days": 47,
+  "alarms_total": 0,
+  "alarm_rate_per_100d": 0.0,
+  "hit": false,
+  "lead_days": null,
+  "alarms_in_lead_window": 0,
+  "alarms_too_early": 0,
+  "alarms_after_trigger": 0,
+  "alarms": []
+ },
+ "endbadgov_2024": {
+  "evaluable": true,
+  "observed_days": 48,
+  "alarms_total": 1,
+  "alarm_rate_per_100d": 2.08,
+  "hit": true,
+  "lead_days": 10,
+  "alarms_in_lead_window": 1,
+  "alarms_too_early": 0,
+  "alarms_after_trigger": 0,
+  "alarms": [
+   {
+    "day": "2024-07-22",
+    "value": 97.0,
+    "threshold": 67.2155,
+    "baseline_mean": 36.4286,
+    "baseline_sd": 15.3935,
+    "days_before_trigger": 10
+   }
+  ]
+ }
+}

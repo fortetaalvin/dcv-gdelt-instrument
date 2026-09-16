@@ -1,0 +1,26 @@
+{
+  "slug": "chibok_2014",
+  "version": 1,
+  "display_name": "Chibok schoolgirls abduction",
+  "incident_type": "insurgency",
+  "regions": [
+    "Borno",
+    "Nigeria"
+  ],
+  "window_start": "2014-01-01",
+  "window_end": "2014-08-31",
+  "trigger_dates": [
+    "2014-04-14"
+  ],
+  "keywords": [
+    "Chibok",
+    "Boko Haram",
+    "schoolgirls abduction",
+    "Borno"
+  ],
+  "keywords_status": "approved",
+  "lead_time_days": null,
+  "model_direction": "B",
+  "notes": "Model B (crisis precedes narrative). Verified 2026-09-15: no pre-trigger narrative signal under any of five keyword framings; pre-trigger trend 0.65-0.85 (declining). GDELT DOC 2.0 cannot reach 2014; narrative layer comes from GKG v1.",
+  "created_at": "2026-09-15T12:32:14+00:00"
+}
