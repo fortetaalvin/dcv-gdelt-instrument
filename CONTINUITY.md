@@ -72,6 +72,14 @@ instrument defects documented.
 5. **Future releases.** Each new release mints a new version DOI under the same
    concept DOI. Cite the concept DOI; pin the version DOI only for an exact
    snapshot.
+6. **Methods paper submission.** Preprint v2.2 is published and archived. Target
+   venue *Big Data & Society*; APC $1,500 with a waiver requestable on
+   acceptance for authors without OA funding. Check whether Nigeria has moved
+   into Research4Life Group A (automatic full waiver) — plausible after the
+   2023-24 devaluation, since Group A admits total GNI under US$200bn where HDI
+   is at or below 0.60.
+7. **Findings paper.** *Mobilisation and Silence* is at v0.4 and not submitted.
+   It depends on round 5 and on ground truth.
 
 ## Conventions that are load-bearing
 
