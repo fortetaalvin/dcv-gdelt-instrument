@@ -19,3 +19,10 @@ __pycache__/
 .ipynb_checkpoints/
 logs/*.log
 logs/.gdelt_last_call
+
+# ACLED / UCDP: licence restricts redistribution, and this repo is public
+data/acled*
+data/ucdp*
+data/*acled*
+data/*ucdp*
+*.acled.csv

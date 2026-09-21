@@ -57,10 +57,7 @@ instrument defects documented.
 
 **Open.**
 
-1. **Ground truth.** The binding constraint on everything. ACLED's edge returns
-   `cf-mitigated: challenge` to this server's IP; UCDP needs a token. Without
-   them: 15 of 18 alarms unexplained, CVD's J has no defensible denominator,
-   precision has a floor but no ceiling, and Ts cannot be computed as specified.
+1. **Ground truth.** The binding constraint on everything. Detailed below.
 2. **Wayback recoverability.** Unmeasured — see `data/README.md`. Needs a run
    paced from the first request.
 3. **Round 5.** Cases selected by rule rather than by the author, in a country
@@ -80,6 +77,56 @@ instrument defects documented.
    is at or below 0.60.
 7. **Findings paper.** *Mobilisation and Silence* is at v0.4 and not submitted.
    It depends on round 5 and on ground truth.
+
+## ACLED — what is needed, and what it unlocks
+
+The single blocker on round 5, on precision, and on the CVD denominator.
+
+### Access — three routes, easiest first
+
+1. **Set a password on the myACLED account.** The API uses an OAuth2 password
+   grant against `https://acleddata.com/oauth/token`. An account created through
+   Google sign-in has no password, and the grant then fails on credentials that
+   look correct. This may be the entire problem.
+2. **Request an IP allowlist for 169.58.84.78.** Every path on `acleddata.com`
+   returns HTTP 403 with `cf-mitigated: challenge` to this host, including the
+   public homepage — an edge decision about the datacenter IP, not the account.
+   No credential or User-Agent clears it.
+3. **Manual export.** Download in a browser, then
+   `python3 -m dcv.cli truth --case <slug> --file <export.csv>`. Already built;
+   records the file SHA-256 and marks the pull `manual_export`.
+
+### The request
+
+Nigeria, **2014-01-01 to 2024-12-31**, **all event types** — filtering to
+protest would rebuild the selection bias the exercise exists to escape. Fields:
+`event_id_cnty`, `event_date`, `event_type`, `sub_event_type`, `actor1`,
+`actor2`, `admin1`, `admin2`, `location`, `fatalities`, `notes`, `source`,
+`source_scale`. API caps at 5,000 rows per call; paginate or take a bulk export.
+
+### What it unlocks
+
+- **A denominator.** `|need| = 6` only because six crises were enumerated, which
+  is why J = 0.1429 is an upper bound. ACLED makes need measurable.
+- **Precision with a ceiling.** 15 of 18 alarms are unattributed; precision has
+  a floor of 0.167 and no defensible top. This is the weakest number in the
+  findings paper.
+- **Round 5 at all.** Rule-selected cases need a criterion to select on. GDELT
+  Events codes no fatalities, so there is none without ACLED.
+- **UC-N2** claim verification against coded events.
+
+### What it does NOT unlock
+
+**Ts.** Earlier rounds reported TSI as blocked because Ts required ACLED/UCDP
+divergence. That came from the project specification and is wrong — the Manara
+paper defines Ts as a source-trust ranking. ACLED/UCDP divergence may still be a
+useful reliability measure, but it is not Ts and must not be labelled as such.
+
+### Licensing
+
+ACLED's terms restrict redistribution and **this repository is public**. ACLED
+data belongs in the local store and the analysis, never in the repo. A
+`.gitignore` rule is in place so this does not depend on remembering.
 
 ## Conventions that are load-bearing
 
