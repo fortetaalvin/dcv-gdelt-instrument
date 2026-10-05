@@ -123,17 +123,17 @@ footer{margin:3.4rem 0 3rem;padding-top:1.1rem;border-top:1px solid var(--rule);
 
 <header class="mast">
   <p class="vtag">Methods paper · Preprint</p>
-  <h1>Silent Failure Modes in GDELT-Based Crisis Research: Twenty-Four Measured Defects and a Validation Protocol</h1>
+  <h1>Silent Failure Modes in GDELT-Based Crisis Research: Twenty-Three Measured Defects and a Validation Protocol</h1>
   <p class="authors">Alvin O. Forteta</p>
   <p class="affil">AUN Coding Hub / Digital River Technologies Ltd., Nigeria &middot; forteta.alvin@aun.edu.ng</p>
   <p class="affil">Preprint v2.2, September 2026</p>
 
   <div class="abs">
     <h2>Abstract</h2>
-    <p>The Global Database of Events, Language and Tone (GDELT) is among the most widely used data sources in computational conflict research, yet its behaviour as a research instrument is poorly documented. This paper reports twenty-four defects measured during a four-round crisis-detection backtest over 3.34 million case records, 4,009 continuous days of Nigerian coverage (16.4 million events), and a 1,200-URL link-rot sample, retrieved through 4,943 provenance-logged requests. All code and data are openly available at <a href="https://github.com/fortetaalvin/dcv-gdelt-instrument"><code>github.com/fortetaalvin/dcv-gdelt-instrument</code></a>.</p>
+    <p>The Global Database of Events, Language and Tone (GDELT) is among the most widely used data sources in computational conflict research, yet its behaviour as a research instrument is poorly documented. This paper reports twenty-three defects measured during a four-round crisis-detection backtest over 3.34 million case records, 4,009 continuous days of Nigerian coverage (16.4 million events), and a 1,200-URL link-rot sample, retrieved through 4,943 provenance-logged requests. All code and data are openly available at <a href="https://github.com/fortetaalvin/dcv-gdelt-instrument"><code>github.com/fortetaalvin/dcv-gdelt-instrument</code></a>.</p>
     <p>The defects share a property that makes them consequential: they are silent. A keyword matching nothing returns an empty series rather than an error; a throttled request returns HTTP 200; a date before an undocumented archive boundary returns a rejection indistinguishable from genuine absence of coverage. Each produces a series that plots cleanly and supports a confident sentence in a results section.</p>
     <p>The principal finding concerns keyword construction. Testing three vocabularies over identical corpora, we find that descriptive multi-word phrases match zero records. Nine of twenty-four terms in our own pre-registered keyword sets were inert, and one case ran an entire analysis round on a single live term. Substituting GDELT's native theme codes degrades performance further (discrimination 69.4% to 59.7%) because theme codes index national topic volume rather than case-specific attention. The remaining vocabulary, proper nouns, works but measures prior salience: a place already rising in coverage produces apparent early warning irrespective of what follows.</p>
-    <p>We further document that GDELT's archive density is non-stationary across an eleven-year span (peak-to-trough ratio 1.848), that only superseded product generations reach before 2015, that a seventeen-day outage in June&#8211;July 2025 is present in all four product generations simultaneously &mdash; so cross-generation redundancy is not the independent check it appears to be &mdash; that a 33% weekend trough interacts with persistence-based detection rules, and that fixed in-window baselines materially inflate apparent lead times. A stratified 1,200-URL sample establishes that source persistence decays exponentially with a half-life of 8.8 years (R&#178; = 0.948), with a third of sources already unreachable two years after publication. Contrary to an earlier claim we withdrew as underpowered, Nigerian outlets persist better than non-Nigerian ones (34.9% versus 56.5% rot), though HTTP status conflates URL migration with content destruction. We conclude with a fourteen-step validation protocol, of which the first would have caught our most consequential error.</p>
+    <p>We further document that GDELT's archive density is non-stationary across an eleven-year span (peak-to-trough ratio 1.848), that only superseded product generations reach before 2015, that a 33% weekend trough interacts with persistence-based detection rules, and that fixed in-window baselines materially inflate apparent lead times. A stratified 1,200-URL sample establishes that source persistence decays exponentially with a half-life of 8.8 years (R&#178; = 0.948), with a third of sources already unreachable two years after publication. Contrary to an earlier claim we withdrew as underpowered, Nigerian outlets persist better than non-Nigerian ones (34.9% versus 56.5% rot), though HTTP status conflates URL migration with content destruction. We conclude with a thirteen-step validation protocol, of which the first would have caught our most consequential error.</p>
     <p class="kw"><b>Keywords:</b> GDELT &middot; research instruments &middot; computational social science &middot; conflict early warning &middot; measurement validity &middot; keyword construction &middot; silent failure &middot; reproducibility &middot; link rot &middot; research infrastructure</p>
   </div>
 </header>
@@ -144,7 +144,7 @@ footer{margin:3.4rem 0 3rem;padding-top:1.1rem;border-top:1px solid var(--rule);
 <p>We know this is consequential because it happened to us. An earlier round of the parent study published a null result attributed to the absence of a signal in the world. Audit revealed that three of that case's four keyword terms matched zero records across the entire corpus; the case had run on one live term. The instrument had a hole in it and the output did not. We retracted that finding. This paper explains why.</p>
 
 <h3><span class="n">1.1</span>Contribution</h3>
-<p>We contribute: (i)&nbsp;twenty-four measured, dated, reproducible defects in GDELT's behaviour as a research instrument, organised into five families; (ii)&nbsp;a controlled comparison of three keyword vocabularies over identical corpora, which we believe is the first such comparison reported; (iii)&nbsp;a measurement of archive non-stationarity across eleven years, with implications for any study comparing periods; (iv)&nbsp;a quantified link-rot decay curve from a 1,200-URL stratified sample with source-type decomposition; and (v)&nbsp;a validation protocol that converts these findings into pre-flight checks.</p>
+<p>We contribute: (i)&nbsp;twenty-three measured, dated, reproducible defects in GDELT's behaviour as a research instrument, organised into five families; (ii)&nbsp;a controlled comparison of three keyword vocabularies over identical corpora, which we believe is the first such comparison reported; (iii)&nbsp;a measurement of archive non-stationarity across eleven years, with implications for any study comparing periods; (iv)&nbsp;a quantified link-rot decay curve from a 1,200-URL stratified sample with source-type decomposition; and (v)&nbsp;a validation protocol that converts these findings into pre-flight checks.</p>
 <p>We make no claim to novelty about GDELT's existence or general character, which are well described elsewhere (Leetaru &amp; Schrodt, 2013; Schrodt, 2012). Our claim is narrower: that a set of specific, silent, undocumented behaviours systematically threaten validity in a literature that does not currently check for them.</p>
 
 <h2><span class="n">2</span>Background</h2>
@@ -246,7 +246,7 @@ footer{margin:3.4rem 0 3rem;padding-top:1.1rem;border-top:1px solid var(--rule);
 <p>GKG v1 and Events 1.0 daily files returned HTTP 200 for every probe from 2014 through January 2025. The practical consequence: a monitoring system built on current-generation APIs cannot examine its own recent history. Any study spanning the 2015 boundary is either using two differently-coded products or restricted to the older one.</p>
 
 <h4>4.2.3&nbsp;&nbsp;Gaps exist inside the archives and differ between products</h4>
-<p>We found no file for 2014-03-19 (GKG and Events), 2020-10-14 (GKG) or 2023-03-23 (both). Separately, DOC 2.0 carries no observation for 2020-10-20, a case trigger date, while Events 1.0 carries 3,322 Nigerian events for that day. Redundancy across product generations is performing unintended preservation work, and gaps must therefore be recorded per product rather than per date. That redundancy has a limit, however, and Section&nbsp;4.2.7 reports a case where it fails entirely.</p>
+<p>We found no file for 2014-03-19 (GKG and Events), 2020-10-14 (GKG) or 2023-03-23 (both). Separately, DOC 2.0 carries no observation for 2020-10-20, a case trigger date, while Events 1.0 carries 3,322 Nigerian events for that day. Redundancy across product generations is performing unintended preservation work, and gaps must therefore be recorded per product rather than per date. That redundancy is a convenience rather than a guarantee, however: we have since observed a multi-day outage absent from GKG v1, Events 1.0, GKG 2.0 and Events 2.0 simultaneously, which we report separately &mdash; where generations share upstream infrastructure, a second GDELT product is not an independent check on the first.</p>
 
 <h4>4.2.4&nbsp;&nbsp;Archive density is not stationary</h4>
 <p>Mean daily Nigerian events vary by a factor of 1.848 across eleven years.</p>
@@ -302,28 +302,6 @@ footer{margin:3.4rem 0 3rem;padding-top:1.1rem;border-top:1px solid var(--rule);
 
 <p>Nigerian 34.9% versus all non-Nigerian 56.5%; confidence intervals do not overlap. An interpretive caveat that matters more than the coefficient: HTTP status conflates two different events, a URL that moved and content that was destroyed. Major international outlets restructure URL schemes and migrate behind paywalls routinely; a dead reuters.com link frequently indicates relocation rather than loss. A dead link at a small local outlet more often means the outlet is gone. We report the reversal because the direction of the original claim mattered and was wrong; we do not claim to have measured differential preservation. The largest single contributor of dead links in the non-Nigerian group is allafrica.com (50 of 615 dead URLs), an aggregator that expires stories. Aggregators decay faster than the outlets they republish.</p>
 
-<h4>4.2.7&nbsp;&nbsp;A seventeen-day outage is correlated across all four products</h4>
-<p>Sections&nbsp;4.2.2 and&nbsp;4.2.3 together imply a reassuring structure: current-generation products have short histories, legacy products reach further back, and gaps differ between them, so redundancy across generations performs unintended preservation work. We found a counterexample, and we found it incidentally &mdash; while harvesting GKG v1 for an unrelated project in September 2026, two sampled days returned HTTP&nbsp;404.</p>
-
-<p>Probing outward established an outage present in <i>every</i> GDELT product we could test. The legacy daily files for GKG v1 and Events 1.0 are both absent for the eighteen days 2025-06-14 to 2025-07-01 inclusive. The current-generation 15-minute files for GKG 2.0 and Events 2.0 are absent from 2025-06-14 18:00 to 2025-07-02 02:00, a span of 17&nbsp;days 8&nbsp;hours and approximately 1,664 missing files. Edges were confirmed in both directions at 15-minute granularity: 2025-06-14 17:45 is present and 18:00 absent; 2025-07-02 01:45 is absent and 02:15 present. The outage was re-probed six days after first observation and persisted, so it is an archive state and not a transient fetch failure.</p>
-
-<figure class="bleed" style="overflow-x:auto;margin:1.5rem 0">
-<table>
-<caption>Table 7. The June&ndash;July 2025 outage across GDELT product generations.</caption>
-<thead><tr><th>Product</th><th>Granularity</th><th>Last present</th><th>First present after</th><th>Missing</th></tr></thead>
-<tbody>
-<tr><td>GKG v1</td><td>daily</td><td>2025-06-13</td><td>2025-07-02</td><td>18 days</td></tr>
-<tr><td>Events 1.0</td><td>daily</td><td>2025-06-13</td><td>2025-07-02</td><td>18 days</td></tr>
-<tr><td>GKG 2.0</td><td>15 minutes</td><td>2025-06-14 17:45</td><td>2025-07-02 02:15</td><td>17d 8h</td></tr>
-<tr><td>Events 2.0</td><td>15 minutes</td><td>2025-06-14 17:45</td><td>2025-07-02 02:15</td><td>17d 8h</td></tr>
-</tbody>
-</table>
-</figure>
-
-<p>Three things follow. First, the redundancy observed in Section&nbsp;4.2.3 is a convenience and not a guarantee: these gaps are correlated across generations because the generations share upstream infrastructure, and a study treating a second GDELT product as an independent check on the first will find that assumption fails exactly when it is most needed. Second, the differing edges are themselves a hazard. The legacy daily file for 2025-06-14 is absent although the current-generation files cover three-quarters of that day, so a researcher reconciling the two products encounters a day that exists in one and not the other &mdash; a build artefact, not a difference in coverage.</p>
-
-<p>Third, and most consequential for the argument of this paper: seventeen days of global news coding are missing from the most widely used open event dataset in the field, in the recent past, and we are aware of no published notice of it. Any study whose window spans June&ndash;July 2025 and which computes a rate, a baseline or a trend across that window is affected, and &mdash; as with every other defect reported here &mdash; nothing in the data announces the problem. A pipeline scoring a 404 as zero events will record a seventeen-day collapse in world conflict. We encountered precisely that risk: the harvester that found the gap recorded failed fetches as errors rather than zeros, and had it not, the finding would have surfaced as a plausible and entirely spurious decline in coverage.</p>
-
 <h3><span class="n">4.3</span>Access and Transport</h3>
 
 <h4>4.3.1&nbsp;&nbsp;Rate limiting returns HTTP 200</h4>
@@ -367,7 +345,7 @@ footer{margin:3.4rem 0 3rem;padding-top:1.1rem;border-top:1px solid var(--rule);
 <p>Where case specifications are versioned but data is not re-ingested, revising a specification creates a new version owning zero records. Every downstream series returns empty, with no error. This is the same silent-empty failure as Sections 4.1.1 and 4.2.1 arriving from a third direction.</p>
 
 <h2><span class="n">5</span>A Validation Protocol</h2>
-<p>The defects above convert into fourteen pre-flight checks, ordered by the cost of omitting them; the first would have caught our most consequential error.</p>
+<p>The defects above convert into thirteen pre-flight checks, ordered by the cost of omitting them; the first would have caught our most consequential error.</p>
 <ol>
 <li>Validate every keyword against the corpus and fail the run if any term returns zero records.</li>
 <li>Name entities; do not describe events. Reserve theme codes for national-scale questions.</li>
@@ -377,7 +355,6 @@ footer{margin:3.4rem 0 3rem;padding-top:1.1rem;border-top:1px solid var(--rule);
 <li>Treat HTTP 200 as possibly throttled; inspect the response body.</li>
 <li>Use DATEADDED, not SQLDATE, for attention series.</li>
 <li>Record gaps as rejected retrievals, never as absent days.</li>
-<li>Probe for mid-window outages, not only start-of-archive boundaries, and do so in every product you rely on. Gaps are correlated across GDELT&#8217;s product generations (Section&nbsp;4.2.7), so a second GDELT product is not an independent check on the first.</li>
 <li>Adjust for archive non-stationarity in any cross-period volume comparison.</li>
 <li>Use a rolling baseline for any operational claim; a fixed baseline only for "was a signal present."</li>
 <li>Report alarms per unit time beside every lead-time claim, with a refractory period.</li>
@@ -401,7 +378,7 @@ footer{margin:3.4rem 0 3rem;padding-top:1.1rem;border-top:1px solid var(--rule);
 <li><b>Dated measurements.</b> Every finding describes GDELT as it behaved in September 2026. Boundaries, limits and field semantics change; the date-stamping throughout is deliberate and these claims carry a half-life.</li>
 <li><b>Wayback recoverability could not be measured.</b> Our first pass issued twelve concurrent requests and archive.org returned HTTP 429; a serial re-run at 1.6-second pacing was still refused. A recoverability study must be paced from the first request, not throttled after the fact.</li>
 <li><b>Link rot measures URL persistence, not preservation.</b> A dead link at a major outlet often indicates URL restructuring; at a small outlet it more often indicates closure. The source-type comparison in Section&nbsp;4.2.6 should be read with that asymmetry in mind.</li>
-<li><b>Defects were found opportunistically, not by systematic audit.</b> There is no reason to think twenty-four is the complete set. The outage in Section&nbsp;4.2.7 is the clearest evidence of that: it was found in September 2026, incidentally, during work with no connection to this paper, in data a year old at the time, and it had been sitting there unremarked the whole while.</li>
+<li><b>Defects were found opportunistically, not by systematic audit.</b> There is no reason to think twenty-three is the complete set.</li>
 </ul>
 
 <h2><span class="n">8</span>Conclusion</h2>

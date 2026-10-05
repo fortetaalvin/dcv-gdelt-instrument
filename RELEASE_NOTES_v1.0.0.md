@@ -1,7 +1,7 @@
 # v1.0.0 — Replication materials
 
 Accompanies the preprint *Silent Failure Modes in GDELT-Based Crisis Research:
-Twenty-Four Measured Defects and a Validation Protocol*, and the companion
+Twenty-Three Measured Defects and a Validation Protocol*, and the companion
 findings paper on narrative crisis detection across six Nigerian cases,
 2014–2024.
 
@@ -18,7 +18,7 @@ findings paper on narrative crisis detection across six Nigerian cases,
 - **Case specification files** (`cases/`) — both versions of each case, before
   and after keyword repair
 - **Re-executable boundary probes** (`probes/`) with a dated reference run
-- **Validation protocol** (`protocol/validate.py`) — fourteen checks as a
+- **Validation protocol** (`protocol/validate.py`) — thirteen checks as a
   runnable checker, exit 1 on failure
 
 ## Verifying without credentials

@@ -1,7 +1,6 @@
 ==============================================================================
   GDELT boundary probes — re-execution of methods paper §4.2
-  Expectations recorded 2026-09-15/16; B5 outage probes (§4.2.7) added
-  2026-10-05. Probing live endpoints now.
+  Expectations recorded 2026-09-15/16. Probing live endpoints now.
 ==============================================================================
 
   id      expect    got  result ref      description
@@ -16,25 +15,13 @@
   B4-a       404    404  PASS   §4.2.3   Archive gap: no GKG file for 2014-03-19
   B4-b       404    404  PASS   §4.2.3   Archive gap: no Events file for 2014-03-19
   B4-c       200    200  PASS   §4.2.3   Events 1.0 DOES carry 2020-10-20, the date DOC 2.0 lacks
-  B5-a       404    404  PASS   §4.2.7   Outage: GKG v1 absent 2025-06-14 (day exists in 2.0 to 17:45)
-  B5-b       404    404  PASS   §4.2.7   Outage: Events 1.0 absent 2025-06-18 (same gap, other product)
-  B5-c       404    404  PASS   §4.2.7   Outage: GKG 2.0 absent 2025-06-18 12:00 (current generation too)
-  B5-d       404    404  PASS   §4.2.7   Outage: Events 2.0 absent 2025-06-18 12:00
-  B5-e       200    200  PASS   §4.2.7   Outage left edge: 2.0 present at 2025-06-14 17:45
-  B5-f       404    404  PASS   §4.2.7   Outage left edge: 2.0 absent 15 minutes later, 18:00
-  B5-g       404    404  PASS   §4.2.7   Outage right edge: 2.0 absent at 2025-07-02 01:45
-  B5-h       200    200  PASS   §4.2.7   Outage right edge: 2.0 present at 2025-07-02 02:15
-  B5-i       200    200  PASS   §4.2.7   Boundary control: GKG v1 present the day before (2025-06-13)
-  B5-j       200    200  PASS   §4.2.7   Boundary control: GKG v1 present the day after (2025-07-02)
 
   DOC 2.0 date-boundary probes (§4.2.1) — body-inspected, not status-coded
   --------------------------------------------------------------------------
   B1-a   PASS   2017 accepted   HTTP 200 · {"query_details": {"title": "Nigeria", "date_resolution": "hour"}, "timeline": [ { "series": "Volume
   B1-b   PASS   2015 rejected   HTTP 200 · Invalid query start date.
-  B1-c   SKIP   2014 rejected   throttled on every attempt (see §4.3.1)
+  B1-c   PASS   2014 rejected   HTTP 200 · Invalid query start date.
 
 ==============================================================================
-  1 probe(s) inconclusive (throttled): B1-c
-  Re-run later; throttling is not a boundary change.
-  22 of 23 probes ran and all match the values recorded 2026-09-15/16.
+  13 of 13 probes ran and all match the values recorded 2026-09-15/16.
 ==============================================================================

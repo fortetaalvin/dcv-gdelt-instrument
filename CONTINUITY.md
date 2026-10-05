@@ -52,7 +52,7 @@ affected before the source paper was consulted.
 **Settled.** Four analysis rounds complete. The protest-event channel separates
 mobilisational from clandestine crises at 3/3 and 0/3 under a prospective
 rolling baseline, 1.65 alarms/year over 11 years, p = 0.0011. Keyword
-vocabularies tested three ways. Link rot measured at n = 1,200. Twenty-four
+vocabularies tested three ways. Link rot measured at n = 1,200. Twenty-three
 instrument defects documented.
 
 **Open.**
@@ -66,6 +66,16 @@ instrument defects documented.
 4. **TSI in its own domain.** The index was built for closed trusted
    micro-publics where quietness signals danger, not open media. Testing it
    against the Mubi fieldwork is a different project.
+5. **The June-July 2025 outage.** Measured, re-probed, and deliberately kept out
+   of the methods paper. An outage absent from all four GDELT product generations
+   simultaneously: legacy daily files 2025-06-14 to 2025-07-01, 15-minute files
+   2025-06-14 18:00 to 2025-07-02 02:00, about 1,664 files. Evidence and a
+   re-executable probe are at `probes/outage_2025.py`; the paper carries only a
+   one-sentence qualification in §4.2.3. Intended as a short data note of its own,
+   because the interesting claim is not that a gap exists but that the gaps are
+   correlated across generations, which makes a second GDELT product a false
+   independent check. Unwritten.
+
 5. **Future releases.** Each new release mints a new version DOI under the same
    concept DOI. Cite the concept DOI; pin the version DOI only for an exact
    snapshot.

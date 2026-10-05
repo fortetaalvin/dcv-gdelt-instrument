@@ -3,7 +3,7 @@
 Replication materials for:
 
 > Forteta, A. O. (2026). *Silent Failure Modes in GDELT-Based Crisis Research:
-> Twenty-Four Measured Defects and a Validation Protocol.* Preprint.
+> Twenty-Three Measured Defects and a Validation Protocol.* Preprint.
 
 and for the companion findings paper on narrative crisis detection across six
 Nigerian cases, 2014–2024.
@@ -24,7 +24,7 @@ Nigerian cases, 2014–2024.
 | `preregistration/` | Pre-registration documents for all three rounds, each written before the run it governs |
 | `cases/` | 12 case specification files as JSON — six cases, both versions of each (v1 original, v2 after keyword repair) |
 | `probes/` | Re-executable boundary probes for methods paper §4.2, plus a recorded run |
-| `protocol/` | The fourteen-step validation protocol as a runnable checker, not prose |
+| `protocol/` | The thirteen-step validation protocol as a runnable checker, not prose |
 | `scripts/` | Ingestion and analysis drivers for each round |
 | `data/*.json` | Analysis outputs: round 2, round 3, round 4, link rot, dashboard |
 

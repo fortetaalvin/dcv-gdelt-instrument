@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-The fourteen-step validation protocol (methods paper §5), as a runnable checker.
+The thirteen-step validation protocol (methods paper §5), as a runnable checker.
 
 Prose checklists get read once. This runs.
 
@@ -9,14 +9,10 @@ Prose checklists get read once. This runs.
 
     python3 protocol/validate.py --config mystudy.json
 
-Checks 1–7 and 9 are automatable and run here. Check 9 (§4.2.7) probes for
-mid-window outages across product generations, which matters because GDELT's
-generations share upstream infrastructure and their gaps are correlated — a
-second GDELT product is not an independent check on the first.
-
-Checks 8 and 10–14 concern analysis design rather than retrieval and cannot be
-verified from a keyword list; they are printed as an explicit manual checklist
-so that omitting one is a decision rather than an oversight.
+Checks 1–7 are automatable and run here. Checks 8–13 concern analysis design
+rather than retrieval and cannot be verified from a keyword list; they are
+printed as an explicit manual checklist so that omitting one is a decision
+rather than an oversight.
 
 Exit status: 0 if every automatable check passes, 1 if any fails, 2 if a check
 could not be completed (network, throttling).
@@ -37,13 +33,6 @@ TIMEOUT = 60
 GKG_V1 = "http://data.gdeltproject.org/gkg/{d}.gkg.csv.zip"
 EVENTS_V1 = "http://data.gdeltproject.org/events/{d}.export.CSV.zip"
 GKG_V2 = "http://data.gdeltproject.org/gdeltv2/{t}.gkg.csv.zip"
-EVENTS_V2 = "http://data.gdeltproject.org/gdeltv2/{t}.export.CSV.zip"
-
-# §4.2.7: measured 2026-09-28, re-probed 2026-10-04. Legacy daily files are
-# absent 2025-06-14..2025-07-01; the 15-minute files are absent from
-# 2025-06-14 18:00 to 2025-07-02 02:00. Four products, one outage.
-KNOWN_OUTAGES = [(datetime(2025, 6, 14), datetime(2025, 7, 1),
-                  "June-July 2025 outage, all four product generations (§4.2.7)")]
 EVENTS_V2_START = datetime(2015, 2, 18)
 DOC_START = datetime(2017, 1, 1)
 
@@ -207,7 +196,7 @@ def check_7_gaps(rep: Report, start: str, end: str, limit: int = 12) -> None:
         d += timedelta(days=step)
         time.sleep(0.4)
     if missing:
-        # §4.2.7 — a gap in one product is not evidence the others have it.
+        # §4.2.3 — a gap in one product is not evidence the others have it.
         # Probe the current generation for the same day. If it is also absent the
         # gap is correlated across generations, and no GDELT product can fill it.
         correlated = []
@@ -235,32 +224,18 @@ def check_7_gaps(rep: Report, start: str, end: str, limit: int = 12) -> None:
                  f"{checked} days sampled, all present")
 
 
-def check_9_known_outage(rep: Report, start: str, end: str) -> None:
-    """Check 9 — does the window overlap a known multi-product outage? (§4.2.7)"""
-    a = datetime.strptime(start, "%Y-%m-%d")
-    b = datetime.strptime(end, "%Y-%m-%d")
-    hits = [note for (o_a, o_b, note) in KNOWN_OUTAGES if a <= o_b and b >= o_a]
-    if hits:
-        rep.line(9, "Window clear of known multi-product outages", "FAIL",
-                 "; ".join(hits) + " — any rate, baseline or trend computed "
-                 "across this window is affected, and no GDELT product can fill it")
-    else:
-        rep.line(9, "Window clear of known multi-product outages", "PASS",
-                 f"{len(KNOWN_OUTAGES)} recorded outage(s), none overlapping")
-
-
 MANUAL = [
     ("8", "Record gaps as rejected retrievals, never as absent days.", "§4.2.3"),
-    ("10", "Adjust for archive non-stationarity in cross-period volume comparison "
-           "(peak/trough 1.848 over 11 years).", "§4.2.4"),
-    ("11", "Use a rolling baseline for operational claims; fixed only for "
+    ("9", "Adjust for archive non-stationarity in cross-period volume comparison "
+          "(peak/trough 1.848 over 11 years).", "§4.2.4"),
+    ("10", "Use a rolling baseline for operational claims; fixed only for "
            "'was a signal present'.", "§4.5.2"),
-    ("12", "Report alarms per unit time beside every lead time, with a "
+    ("11", "Report alarms per unit time beside every lead time, with a "
            "refractory period.", "§4.5.3"),
-    ("13", "Use differences not ratios on signed series; log every retrieval "
-           "with parameters and a response hash, failures included.", "§4.5.4"),
-    ("14", "Verify URL resolution before planning text extraction — a third of "
+    ("12", "Verify URL resolution before planning text extraction — a third of "
            "sources are gone in two years.", "§4.2.5"),
+    ("13", "Use differences not ratios on signed series; log every retrieval "
+           "with parameters and a response hash.", "§4.5.4"),
 ]
 
 
@@ -292,13 +267,12 @@ def main() -> int:
     check_3_decomposable(rep, terms)
     check_4_word_boundary(rep, terms)
     check_5_boundaries(rep, start, end)
-    check_9_known_outage(rep, start, end)
     if not a.skip_network:
         check_1_keywords_live(rep, terms, start)
         check_6_throttle(rep)
         check_7_gaps(rep, start, end)
     else:
-        print("  (network checks 1, 6, 7 skipped; check 9 is offline and ran)")
+        print("  (network checks 1, 6, 7 skipped)")
 
     print("\n  Manual checks — not verifiable from a keyword list:")
     print("  " + "-" * 74)
