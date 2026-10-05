@@ -1,7 +1,7 @@
 ==============================================================================
   GDELT boundary probes — re-execution of methods paper §4.2
-  Expectations recorded 2026-09-15/16; B5 outage probes added 2026-10-05.
-  Probing live endpoints now.
+  Expectations recorded 2026-09-15/16; B5 outage probes (§4.2.7) added
+  2026-10-05. Probing live endpoints now.
 ==============================================================================
 
   id      expect    got  result ref      description
@@ -29,14 +29,12 @@
 
   DOC 2.0 date-boundary probes (§4.2.1) — body-inspected, not status-coded
   --------------------------------------------------------------------------
-  B1-a   SKIP   2017 accepted   throttled on every attempt (see §4.3.1)
+  B1-a   PASS   2017 accepted   HTTP 200 · {"query_details": {"title": "Nigeria", "date_resolution": "hour"}, "timeline": [ { "series": "Volume
   B1-b   PASS   2015 rejected   HTTP 200 · Invalid query start date.
   B1-c   SKIP   2014 rejected   throttled on every attempt (see §4.3.1)
 
 ==============================================================================
-  2 probe(s) inconclusive (throttled): B1-a, B1-c
+  1 probe(s) inconclusive (throttled): B1-c
   Re-run later; throttling is not a boundary change.
-  All 23 probes match their recorded values.
-  B5-* (§4.2.7) re-probed 2026-10-05: the June-July 2025 outage persists in
-  all four product generations, edges unchanged at 15-minute granularity.
+  22 of 23 probes ran and all match the values recorded 2026-09-15/16.
 ==============================================================================
