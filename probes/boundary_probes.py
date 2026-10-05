@@ -50,6 +50,32 @@ HTTP_PROBES = [
      "http://data.gdeltproject.org/events/20140319.export.CSV.zip", 404, "§4.2.3"),
     ("B4-c", "Events 1.0 DOES carry 2020-10-20, the date DOC 2.0 lacks",
      "http://data.gdeltproject.org/events/20201020.export.CSV.zip", 200, "§4.2.3"),
+
+    # §4.2.7 — the June-July 2025 outage, present in all four products at once.
+    # Found incidentally in September 2026; re-probed six days later and still
+    # absent, so it is an archive state rather than a transient fetch failure.
+    # The edges matter as much as the absence: the legacy daily file for
+    # 2025-06-14 is gone although the 15-minute files cover that day to 17:45.
+    ("B5-a", "Outage: GKG v1 absent 2025-06-14 (day exists in 2.0 to 17:45)",
+     "http://data.gdeltproject.org/gkg/20250614.gkg.csv.zip", 404, "§4.2.7"),
+    ("B5-b", "Outage: Events 1.0 absent 2025-06-18 (same gap, other product)",
+     "http://data.gdeltproject.org/events/20250618.export.CSV.zip", 404, "§4.2.7"),
+    ("B5-c", "Outage: GKG 2.0 absent 2025-06-18 12:00 (current generation too)",
+     "http://data.gdeltproject.org/gdeltv2/20250618120000.gkg.csv.zip", 404, "§4.2.7"),
+    ("B5-d", "Outage: Events 2.0 absent 2025-06-18 12:00",
+     "http://data.gdeltproject.org/gdeltv2/20250618120000.export.CSV.zip", 404, "§4.2.7"),
+    ("B5-e", "Outage left edge: 2.0 present at 2025-06-14 17:45",
+     "http://data.gdeltproject.org/gdeltv2/20250614174500.gkg.csv.zip", 200, "§4.2.7"),
+    ("B5-f", "Outage left edge: 2.0 absent 15 minutes later, 18:00",
+     "http://data.gdeltproject.org/gdeltv2/20250614180000.gkg.csv.zip", 404, "§4.2.7"),
+    ("B5-g", "Outage right edge: 2.0 absent at 2025-07-02 01:45",
+     "http://data.gdeltproject.org/gdeltv2/20250702014500.gkg.csv.zip", 404, "§4.2.7"),
+    ("B5-h", "Outage right edge: 2.0 present at 2025-07-02 02:15",
+     "http://data.gdeltproject.org/gdeltv2/20250702021500.gkg.csv.zip", 200, "§4.2.7"),
+    ("B5-i", "Boundary control: GKG v1 present the day before (2025-06-13)",
+     "http://data.gdeltproject.org/gkg/20250613.gkg.csv.zip", 200, "§4.2.7"),
+    ("B5-j", "Boundary control: GKG v1 present the day after (2025-07-02)",
+     "http://data.gdeltproject.org/gkg/20250702.gkg.csv.zip", 200, "§4.2.7"),
 ]
 
 

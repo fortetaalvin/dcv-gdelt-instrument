@@ -52,7 +52,7 @@ affected before the source paper was consulted.
 **Settled.** Four analysis rounds complete. The protest-event channel separates
 mobilisational from clandestine crises at 3/3 and 0/3 under a prospective
 rolling baseline, 1.65 alarms/year over 11 years, p = 0.0011. Keyword
-vocabularies tested three ways. Link rot measured at n = 1,200. Twenty-three
+vocabularies tested three ways. Link rot measured at n = 1,200. Twenty-four
 instrument defects documented.
 
 **Open.**

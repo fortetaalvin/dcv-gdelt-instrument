@@ -1,0 +1,472 @@
+<title>Silent Failure Modes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --paper:#fafbfb; --panel:#fff; --sunk:#f2f4f4; --ink:#1b1d1f; --ink2:#383c40;
+  --mute:#646b72; --faint:#949ba1; --rule:#dfe3e5; --hair:#ebeeef;
+  --accent:#14524f; --accent-bg:#e6efee;
+  --flag:#8a3a2a; --flag-bg:#f7eae6;
+  --measure:38rem;
+  --serif:'Crimson Pro',Georgia,'Times New Roman',serif;
+  --cond:'Barlow Condensed',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0f1213; --panel:#161a1b; --sunk:#131718; --ink:#e2e6e7; --ink2:#c6ccce;
+  --mute:#8d959b; --faint:#6a7278; --rule:#242a2c; --hair:#1c2223;
+  --accent:#62b5ae; --accent-bg:#122423;
+  --flag:#dd8a76; --flag-bg:#2a1815;
+}}
+:root[data-theme="dark"]{
+  --paper:#0f1213; --panel:#161a1b; --sunk:#131718; --ink:#e2e6e7; --ink2:#c6ccce;
+  --mute:#8d959b; --faint:#6a7278; --rule:#242a2c; --hair:#1c2223;
+  --accent:#62b5ae; --accent-bg:#122423;
+  --flag:#dd8a76; --flag-bg:#2a1815;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+  font-size:18.5px;line-height:1.6;font-weight:400;-webkit-font-smoothing:antialiased}
+.wrap{display:grid;grid-template-columns:1fr min(var(--measure),calc(100% - 2.4rem)) 1fr}
+.wrap>*{grid-column:2}
+.bleed{grid-column:1/-1;width:min(58rem,calc(100% - 2.4rem));margin-inline:auto}
+
+/* masthead */
+header.mast{padding:3.8rem 0 0}
+.vtag{font-family:var(--cond);font-size:.78rem;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent);margin:0 0 1rem}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.8rem,4.4vw,2.5rem);
+  line-height:1.14;letter-spacing:-.012em;margin:0 0 1.1rem;text-wrap:balance}
+.authors{font-size:1.02rem;margin:0 0 .2rem;color:var(--ink)}
+.affil{font-family:var(--cond);font-size:.92rem;color:var(--mute);margin:0 0 1.6rem;
+  line-height:1.4}
+.abs{background:var(--panel);border:1px solid var(--rule);padding:1.5rem 1.6rem;
+  margin-bottom:1rem}
+.abs h2{font-family:var(--cond);font-size:.78rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mute);margin:0 0 .7rem;border:none;padding:0}
+.abs p{font-size:.97rem;line-height:1.56;margin:0 0 .8rem}
+.abs p:last-child{margin-bottom:0}
+.kw{font-family:var(--cond);font-size:.9rem;color:var(--mute);margin:0 0 2.4rem;
+  padding-top:.9rem;border-top:1px solid var(--rule)}
+.kw b{font-weight:600;color:var(--ink2)}
+
+h2{font-family:var(--serif);font-weight:600;font-size:1.3rem;line-height:1.24;
+  margin:2.9rem 0 .7rem;text-wrap:balance;padding-top:.9rem;border-top:1px solid var(--rule)}
+h2 .n{font-family:var(--mono);font-size:.78rem;font-weight:500;color:var(--accent);
+  margin-right:.6rem}
+h3{font-family:var(--serif);font-weight:600;font-size:1.05rem;margin:1.9rem 0 .4rem}
+h3 .n{font-family:var(--mono);font-size:.72rem;font-weight:500;color:var(--faint);
+  margin-right:.5rem}
+h4{font-family:var(--cond);font-weight:600;font-size:.94rem;letter-spacing:.02em;
+  margin:1.4rem 0 .35rem;color:var(--ink)}
+p{margin:0 0 .95rem}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;
+  text-decoration-thickness:.5px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+code{font-family:var(--mono);font-size:.82em;background:var(--sunk);padding:.06em .3em;
+  border-radius:2px}
+pre{background:var(--sunk);border:1px solid var(--hair);padding:.8rem .95rem;
+  overflow-x:auto;font-family:var(--mono);font-size:.76rem;line-height:1.55;
+  margin:.8rem 0;color:var(--ink2)}
+strong{font-weight:600}
+ul,ol{margin:0 0 .95rem;padding-left:1.3rem}
+li{margin-bottom:.35rem}
+li::marker{color:var(--faint)}
+
+/* tables */
+.tw{overflow-x:auto;margin:1.3rem 0 .4rem}
+table{border-collapse:collapse;width:100%;font-family:var(--cond);font-size:.92rem;
+  background:var(--panel)}
+caption{caption-side:top;text-align:left;font-family:var(--cond);font-size:.88rem;
+  color:var(--ink2);padding:0 0 .5rem;line-height:1.4}
+caption b{font-weight:600;color:var(--ink)}
+th,td{padding:.4rem .7rem;text-align:right;border-bottom:1px solid var(--hair);
+  white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+thead th{font-size:.82rem;font-weight:600;color:var(--mute);
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--rule)}
+tbody tr:last-child td{border-bottom:1px solid var(--ink)}
+td.n{font-family:var(--mono);font-size:.82rem;font-variant-numeric:tabular-nums}
+.tn{font-family:var(--cond);font-size:.88rem;color:var(--mute);line-height:1.45;
+  margin:.5rem 0 0}
+.fl{color:var(--flag);font-weight:600}
+.ac{color:var(--accent);font-weight:600}
+
+/* callouts */
+.box{border-left:2px solid var(--accent);background:var(--accent-bg);
+  padding:.85rem 1.1rem;margin:1.4rem 0;font-size:.95rem;color:var(--ink2)}
+.box.warn{border-left-color:var(--flag);background:var(--flag-bg)}
+.box .lbl{font-family:var(--cond);font-size:.8rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;display:block;margin-bottom:.3rem;color:var(--mute)}
+.box p:last-child{margin-bottom:0}
+
+.refs{font-size:.92rem;color:var(--ink2)}
+.refs li{margin-bottom:.5rem}
+footer{margin:3.4rem 0 3rem;padding-top:1.1rem;border-top:1px solid var(--rule);
+  font-family:var(--cond);font-size:.9rem;color:var(--mute)}
+.toggle{position:fixed;top:1rem;right:1rem;z-index:10;font-family:var(--cond);
+  font-size:.82rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--mute);background:var(--panel);border:1px solid var(--rule);
+  border-radius:2px;padding:.32rem .6rem;cursor:pointer}
+.toggle:hover{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{.toggle{display:none}}
+</style>
+
+<button class="toggle" id="tt" aria-label="Toggle colour theme">Theme</button>
+
+<div class="wrap">
+
+
+<header class="mast">
+  <p class="vtag">Methods paper · Preprint</p>
+  <h1>Silent Failure Modes in GDELT-Based Crisis Research: Twenty-Four Measured Defects and a Validation Protocol</h1>
+  <p class="authors">Alvin O. Forteta</p>
+  <p class="affil">AUN Coding Hub / Digital River Technologies Ltd., Nigeria &middot; forteta.alvin@aun.edu.ng</p>
+  <p class="affil">Preprint v2.2, September 2026</p>
+
+  <div class="abs">
+    <h2>Abstract</h2>
+    <p>The Global Database of Events, Language and Tone (GDELT) is among the most widely used data sources in computational conflict research, yet its behaviour as a research instrument is poorly documented. This paper reports twenty-four defects measured during a four-round crisis-detection backtest over 3.34 million case records, 4,009 continuous days of Nigerian coverage (16.4 million events), and a 1,200-URL link-rot sample, retrieved through 4,943 provenance-logged requests. All code and data are openly available at <a href="https://github.com/fortetaalvin/dcv-gdelt-instrument"><code>github.com/fortetaalvin/dcv-gdelt-instrument</code></a>.</p>
+    <p>The defects share a property that makes them consequential: they are silent. A keyword matching nothing returns an empty series rather than an error; a throttled request returns HTTP 200; a date before an undocumented archive boundary returns a rejection indistinguishable from genuine absence of coverage. Each produces a series that plots cleanly and supports a confident sentence in a results section.</p>
+    <p>The principal finding concerns keyword construction. Testing three vocabularies over identical corpora, we find that descriptive multi-word phrases match zero records. Nine of twenty-four terms in our own pre-registered keyword sets were inert, and one case ran an entire analysis round on a single live term. Substituting GDELT's native theme codes degrades performance further (discrimination 69.4% to 59.7%) because theme codes index national topic volume rather than case-specific attention. The remaining vocabulary, proper nouns, works but measures prior salience: a place already rising in coverage produces apparent early warning irrespective of what follows.</p>
+    <p>We further document that GDELT's archive density is non-stationary across an eleven-year span (peak-to-trough ratio 1.848), that only superseded product generations reach before 2015, that a seventeen-day outage in June&#8211;July 2025 is present in all four product generations simultaneously &mdash; so cross-generation redundancy is not the independent check it appears to be &mdash; that a 33% weekend trough interacts with persistence-based detection rules, and that fixed in-window baselines materially inflate apparent lead times. A stratified 1,200-URL sample establishes that source persistence decays exponentially with a half-life of 8.8 years (R&#178; = 0.948), with a third of sources already unreachable two years after publication. Contrary to an earlier claim we withdrew as underpowered, Nigerian outlets persist better than non-Nigerian ones (34.9% versus 56.5% rot), though HTTP status conflates URL migration with content destruction. We conclude with a fourteen-step validation protocol, of which the first would have caught our most consequential error.</p>
+    <p class="kw"><b>Keywords:</b> GDELT &middot; research instruments &middot; computational social science &middot; conflict early warning &middot; measurement validity &middot; keyword construction &middot; silent failure &middot; reproducibility &middot; link rot &middot; research infrastructure</p>
+  </div>
+</header>
+
+<h2><span class="n">1</span>Introduction</h2>
+<p>Methods sections compress. A study that spent six months discovering how its data source actually behaves will report that behaviour in a paragraph, and the paragraph will describe the configuration that finally worked rather than the several that did not. For most instruments this compression is harmless. For GDELT it is not, because the ways GDELT fails do not announce themselves.</p>
+<p>This paper reports what we had to learn about GDELT while building a crisis-detection backtest, and argues that the learning is a publishable object in its own right. The argument rests on a single property shared by every defect below. None raises an exception. None returns an error code. Each produces a well-formed time series that can be plotted, tabulated, regressed and published, and that is, in several cases, measuring nothing at all.</p>
+<p>We know this is consequential because it happened to us. An earlier round of the parent study published a null result attributed to the absence of a signal in the world. Audit revealed that three of that case's four keyword terms matched zero records across the entire corpus; the case had run on one live term. The instrument had a hole in it and the output did not. We retracted that finding. This paper explains why.</p>
+
+<h3><span class="n">1.1</span>Contribution</h3>
+<p>We contribute: (i)&nbsp;twenty-four measured, dated, reproducible defects in GDELT's behaviour as a research instrument, organised into five families; (ii)&nbsp;a controlled comparison of three keyword vocabularies over identical corpora, which we believe is the first such comparison reported; (iii)&nbsp;a measurement of archive non-stationarity across eleven years, with implications for any study comparing periods; (iv)&nbsp;a quantified link-rot decay curve from a 1,200-URL stratified sample with source-type decomposition; and (v)&nbsp;a validation protocol that converts these findings into pre-flight checks.</p>
+<p>We make no claim to novelty about GDELT's existence or general character, which are well described elsewhere (Leetaru &amp; Schrodt, 2013; Schrodt, 2012). Our claim is narrower: that a set of specific, silent, undocumented behaviours systematically threaten validity in a literature that does not currently check for them.</p>
+
+<h2><span class="n">2</span>Background</h2>
+<p>GDELT has become infrastructure for computational conflict research, supporting work on protest prediction, conflict forecasting, media framing and event detection. Its appeal is obvious: global coverage, daily or sub-daily granularity, decades of depth, no access cost. That appeal has driven adoption well beyond the contexts for which the instrument was designed, and the gap between what GDELT promises and what it delivers has received insufficient systematic attention.</p>
+
+<h3><span class="n">2.1</span>The conflict early warning literature</h3>
+<p>The early warning literature that motivates this work has grown substantially alongside GDELT's adoption. Chadefaux (2014) demonstrated that newspaper text contains signals that precede the onset of interstate wars, improving on model-based forecasts using only information available before the conflict. Cederman and Weidmann (2017) offered a necessary corrective: even as methods improved, the fundamental difficulty of predicting low-frequency, high-consequence events meant that expectations needed calibrating, not just methods. Hegre et al. (2019) operationalised this lesson in ViEWS, a formal early-warning system that reports uncertainty honestly and updates continuously; Hegre et al. (2021) revised and evaluated it further. These papers set the standard this study tries to meet: pre-registered hypotheses, rolling baselines, explicit alarm rates alongside lead-time claims.</p>
+<p>The recent turn to large language models for conflict forecasting has introduced a new class of instrument and a new class of instrument failure. Nemkova, Lingareddy and Albert (2025) found that LLMs can identify conflict trends when provided with summaries of recent events, but that parametric knowledge alone, without external grounding, degrades sharply across conflict-prone regions. Poli Nemkova et al. (2026) evaluated open-weight LLMs against ACLED for Nigeria and Cameroon and found that in Nigeria, state actors are legitimised 36.5% more often than non-state actors in identical tactical contexts, and that delegitimising phrases produce flip rates up to 34.2%. The source composition and framing biases documented in GDELT propagate into the systems trained downstream on it. What the archive encodes, the model inherits.</p>
+
+<h3><span class="n">2.2</span>The methodological literature on GDELT</h3>
+<p>The methodological literature on GDELT as an instrument is thinner than its use warrants. Wang, Kennedy, Lazer and Ramakrishnan (2016) found in <i>Science</i> that only 21% of GDELT's reported protest events referred to real protests, and that GDELT and ICEWS rarely reported the same events. Their finding concerns content validity: whether coded events correspond to things that happened. Weidmann (2016) extended this to reporting bias: conflict event datasets based on media coverage systematically underrepresent events in areas with less media access. Raleigh, Kishi and Linke (2023) demonstrated that these problems are not confined to GDELT: across four major conflict datasets, scope conditions, source choices, and coding decisions make certain actors structurally visible while rendering others invisible, a finding that directly implicates the source composition ceiling we document in Section&nbsp;4.4.5.</p>
+<p>Hoffmann, Santos, Neumayer and Mercea (2022) pushed further into the processing layer, documenting in detail what it actually costs to use GDELT for protest event analysis. Their conclusion, that big data repositories require significant additional resources of knowledge, labour and computational power and should not be taken at face value, is the closest antecedent to this paper. Cheng, Cheng and Li (2025) recently quantified these concerns systematically, finding GDELT's key field accuracy rate at approximately 55% and data redundancy as high as 20%, and recommending correction and deduplication as standard practice. The defects we report are a different class from content validity problems: where these authors addressed what the data means, we address whether the instrument is returning data at all.</p>
+<p>The distinction matters because the two classes of problem have different remedies. Coding error is addressed statistically, by triangulation against other event datasets. Instrument error is addressed procedurally, by validation before analysis, which is what the protocol in Section&nbsp;5 provides.</p>
+
+<h3><span class="n">2.3</span>Infrastructure, reproducibility, and link rot</h3>
+<p>Infrastructure has a way of making its problems invisible. Star and Ruhleder (1996) argued that infrastructure is precisely what disappears from view when it works, and what becomes suddenly visible when it breaks. Borgman (2015) extended this to big data systems: the assumptions embedded in large research databases are inherited by every study that uses them, usually without inspection. GDELT presents a harder version of this problem: an instrument that fails silently, continuing to return outputs after the conditions for valid inference have been violated.</p>
+<p>The reproducibility literature frames the same problem from a different angle. Kapoor and Narayanan (2023) identified leakage as the dominant mechanism by which test conditions embed information the operational system would not have had, producing spurious optimism that is invisible to the researcher. Schoch, Chan, Wagner et al. (2024) argued that computational social science faces its own distinct reproducibility challenges, proposing a tier system that distinguishes open-washing from genuine reproducibility, and naming proactive planning and alternate data sources as practical solutions. Ikeuchi and Imai (2026) found that only 9.9% of empirical articles in three leading sociology journals published between 2019 and 2024 provide publicly accessible replication packages. The retraction we report in Section&nbsp;1, and the GitHub repository we commit to in Section&nbsp;9, are direct responses to this documented norm gap.</p>
+<p>On link rot: research on URL decay has a literature of its own. Pew Research Center (2024) found that 25% of all web pages created between 2013 and 2023 were already inaccessible by October 2023. Sadatmoosavi, Khasseh and Tajedini (2026) traced web citation decay across 2,886 citations in Library and Information Science journals over twenty years, finding accessibility falling from 87% for citations zero to five years old to 38% for those over ten years old, and permanent link rot tripling from 5% in 2012 to 15% in 2025, with each new cohort of articles decaying faster than the one before. Our half-life estimate of 8.8 years for source URLs in the GDELT corpus falls squarely within this range and confirms that the decay pattern is not specific to journalism; it is a general property of the web as a research infrastructure. The question of whether that decay is uniform across source types is one we address in Section&nbsp;4.2.6 and return to in the Discussion.</p>
+
+<h2><span class="n">3</span>Data and Method</h2>
+<p>The defects were found during a four-round backtest asking whether narrative and event data would have given advance warning of six Nigerian crises between 2014 and 2024. That study's substantive results are reported separately (Forteta, 2026b); here it functions as the instrument through which GDELT was exercised.</p>
+
+<h3><span class="n">3.1</span>Corpora</h3>
+<p>Six case corpora, each a 76-day window centred on a ground-truth trigger, drawn from GDELT GKG v1 (narrative) and GDELT Events 1.0 (coded events), filtered to Nigeria at parse time. Plus one continuous series: every day from 2014-01-01 to 2024-12-31, stored as daily aggregates.</p>
+
+<figure class="bleed" style="overflow-x:auto;margin:1.5rem 0">
+<table>
+<caption>Table 1. Corpus and retrieval summary.</caption>
+<thead><tr><th>Component</th><th>Records</th><th>Pulls</th><th>Span</th></tr></thead>
+<tbody>
+<tr><td>Six case corpora (GKG v1 + Events 1.0)</td><td>3,344,358</td><td>912</td><td>76 days each</td></tr>
+<tr><td>Continuous daily aggregates (Events 1.0)</td><td>16,435,875</td><td>4,022</td><td>4,009 days</td></tr>
+<tr><td>DOC 2.0 (robustness check)</td><td>366</td><td>8</td><td>one window</td></tr>
+<tr><td>Total logged retrievals</td><td></td><td>4,943</td><td>2014&#8211;2024</td></tr>
+</tbody>
+</table>
+</figure>
+
+<p>Of 4,943 retrievals, 4,918 succeeded and 25 failed (13 rejected, 7 error, 4 rate-limited). Failures are recorded as rows, not dropped.</p>
+
+<h3><span class="n">3.2</span>Provenance</h3>
+<p>Every retrieval writes a row carrying the exact endpoint, the full parameter set, the SHA-256 of the response body, a record count and an outcome. Failures are recorded with the same fidelity as successes. This is what makes the defects below measurements rather than recollections: each is traceable to a byte-identical response, and the boundary probes in Section&nbsp;4.2 can be re-executed against the same URLs. The retrieval layer code and provenance database are available at <a href="https://github.com/fortetaalvin/dcv-gdelt-instrument"><code>github.com/fortetaalvin/dcv-gdelt-instrument</code></a> (Zenodo DOI: <a href="https://doi.org/10.5281/zenodo.22801923">10.5281/zenodo.22801923</a>).</p>
+
+<h3><span class="n">3.3</span>How defects were identified</h3>
+<p>No defect here was sought. Each surfaced as an anomaly during analysis, an implausible number, a result that would not replicate under a small change, a series that was suspiciously flat, and was then isolated by direct probing of the live endpoints. We report the probe in each case so the reader can distinguish measurement from inference.</p>
+
+<h2><span class="n">4</span>Findings</h2>
+
+<h3><span class="n">4.1</span>Keyword Construction</h3>
+<p>This family is the paper's principal contribution, and the one we most wish we had read before beginning.</p>
+
+<h4>4.1.1&nbsp;&nbsp;Descriptive multi-word keywords match nothing</h4>
+<p>GKG's PERSONS, ORGANIZATIONS and THEMES fields hold extracted named entities and controlled theme codes. They do not hold prose. A descriptive noun phrase therefore never appears as a literal string, and a keyword built from one returns an empty series. Of twenty-four keyword terms across six pre-registered case keyword sets, nine returned exactly zero records and a tenth returned one. Dead terms included "schoolgirls abduction", "police brutality Nigeria", "hunger protest", "election protest" and "herder farmer". One case consequently ran its entire analysis on a single live term out of four, and its null result was initially published as a finding about the crisis rather than about the keyword list.</p>
+
+<h4>4.1.2&nbsp;&nbsp;The failure is specific to descriptors, not to multi-word terms</h4>
+<p>Multi-word proper nouns match normally: Boko Haram returned 139 records and Barkin Ladi 1,123. The operative rule is: name an entity; do not describe an event. Not the simpler and incorrect "avoid multi-word keywords", which would discard working terms.</p>
+
+<h4>4.1.3&nbsp;&nbsp;Theme codes are not a drop-in remedy</h4>
+<p>GDELT publishes a controlled theme vocabulary, PROTEST, KIDNAP, ARMEDCONFLICT, UNREST_POLICEBRUTALITY, which names precisely the concepts the dead descriptors were reaching for. Substituting them is the obvious repair. We pre-registered that repair, specified a mechanical substitution rule, added a validation gate, and re-ran all six cases over identical corpora. It made performance worse. Theme codes index national topic volume, not case-specific attention. In single 76-day windows, PROTEST matched 475,457 records, ELECTION 284,800 and ARMEDCONFLICT 77,832. Adding one converts a case-specific attention series into a national topic series with a high, flat baseline. Zebrowski and Afli (2024) observed a parallel problem when extracting GDELT features for country-month instability forecasting: the signal strength of sentiment and event-count features depends critically on the granularity at which they are computed, and national-level aggregation routinely buries sub-national dynamics.</p>
+
+<figure class="bleed" style="overflow-x:auto;margin:1.5rem 0">
+<table>
+<caption>Table 2. Three keyword vocabularies over identical corpora, six cases, same detection rule.</caption>
+<thead><tr><th>Vocabulary</th><th>Discrimination</th><th>Targets met</th><th>Failure mode</th></tr></thead>
+<tbody>
+<tr><td>Descriptive phrases</td><td>n/a</td><td>n/a</td><td>match zero records</td></tr>
+<tr><td>Native theme codes</td><td>59.7%</td><td>0 of 3</td><td>national, not case-level</td></tr>
+<tr><td>Proper nouns</td><td>69.4%</td><td>2 of 3</td><td>measure prior salience (4.1.5)</td></tr>
+</tbody>
+</table>
+</figure>
+
+<h4>4.1.4&nbsp;&nbsp;Dead terms are provably inert</h4>
+<p>A live-terms-only variant, dead terms dropped and nothing added, reproduced the original results to the decimal on every case: identical lead times, identical pre-trigger means. This is the mechanical demonstration that the dead terms contributed nothing.</p>
+
+<h4>4.1.5&nbsp;&nbsp;Proper-noun keywords measure prior salience</h4>
+<p>The best-performing vocabulary carries its own confound. Place-name terms track what was already in the news, not what is coming.</p>
+
+<figure class="bleed" style="overflow-x:auto;margin:1.5rem 0">
+<table>
+<caption>Table 3. Two abduction cases, identical instrument design, opposite verdicts.</caption>
+<thead><tr><th>Term</th><th>Pre-trigger days with coverage</th><th>Trend</th><th>Detector output</th></tr></thead>
+<tbody>
+<tr><td>Katsina (before Kankara, 2020)</td><td>49 of 49</td><td>2.69 rising</td><td>+19 days "early warning"</td></tr>
+<tr><td>Borno (before Chibok, 2014)</td><td>43 of 43</td><td>0.65 falling</td><td>no early signal</td></tr>
+</tbody>
+</table>
+</figure>
+
+<h4>Why this is the most dangerous defect in the paper</h4>
+<p>Both cases are clandestine mass abductions. Both keyword sets contain a state-level term with near-total daily coverage. The difference is trajectory: Katsina was rising through an ongoing banditry campaign; Borno was in the news and fading. The nineteen-day "early warning" detected a region under rising attention, not a coming event. At prediction time this is indistinguishable from a true positive. This connects to the broader concern articulated by Cederman and Weidmann (2017): what early-warning systems detect may be properties of their measurement instruments rather than properties of the world. Croicu and von der Maase (2024) documented persistent under-coverage of conflicts in Sub-Saharan Africa and Southeast Asia relative to Europe and the Middle East even after accounting for conflict intensity, confirming that the media salience prior is not neutral across geographies.</p>
+
+<h3><span class="n">4.2</span>Archive Boundaries and Temporal Non-Stationarity</h3>
+
+<h4>4.2.1&nbsp;&nbsp;Documented start dates are earlier than actual ones</h4>
+<p>DOC 2.0 rejects any start date before 2017: 2017-01-01 accepted; 2015-01-01 and 2014-04-01 both rejected with <code>Invalid query start date</code>. Events 2.0 begins 2015-02-18 at 22:45; files before that date return 404. Both rejections are indistinguishable from genuine absence of coverage if the error is swallowed. A pipeline that returns an empty series on boundary rejection will plot a quiet period.</p>
+
+<h4>4.2.2&nbsp;&nbsp;Only superseded generations reach back</h4>
+<p>GKG v1 and Events 1.0 daily files returned HTTP 200 for every probe from 2014 through January 2025. The practical consequence: a monitoring system built on current-generation APIs cannot examine its own recent history. Any study spanning the 2015 boundary is either using two differently-coded products or restricted to the older one.</p>
+
+<h4>4.2.3&nbsp;&nbsp;Gaps exist inside the archives and differ between products</h4>
+<p>We found no file for 2014-03-19 (GKG and Events), 2020-10-14 (GKG) or 2023-03-23 (both). Separately, DOC 2.0 carries no observation for 2020-10-20, a case trigger date, while Events 1.0 carries 3,322 Nigerian events for that day. Redundancy across product generations is performing unintended preservation work, and gaps must therefore be recorded per product rather than per date. That redundancy has a limit, however, and Section&nbsp;4.2.7 reports a case where it fails entirely.</p>
+
+<h4>4.2.4&nbsp;&nbsp;Archive density is not stationary</h4>
+<p>Mean daily Nigerian events vary by a factor of 1.848 across eleven years.</p>
+
+<figure class="bleed" style="overflow-x:auto;margin:1.5rem 0">
+<table>
+<caption>Table 4. Mean Nigerian events per day, by year, from 4,009 continuous days.</caption>
+<thead><tr><th>Year</th><th>2014</th><th>2015</th><th>2016</th><th>2017</th><th>2018</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th></tr></thead>
+<tbody>
+<tr><td>Events/day</td><td>2,887</td><td>4,977</td><td>5,336</td><td>5,029</td><td>4,800</td><td>4,210</td><td>3,618</td><td>3,444</td><td>2,973</td><td>3,973</td><td>3,835</td></tr>
+</tbody>
+</table>
+</figure>
+
+<p>Peak-to-trough ratio 1.848; coefficient of variation 0.197. The 2014 trough is not a quiet year in Nigeria: it contains the Chibok abduction and a major insurgency escalation. Any study comparing raw volumes across periods is confounded by this. The parallel to Weidmann's (2016) reporting bias concern is direct: what looks like a finding about conflict intensity may partly reflect the archive's own density curve. No published GDELT study we are aware of adjusts for it.</p>
+
+<h4>4.2.5&nbsp;&nbsp;Source URL persistence decays exponentially: a 1,200-URL measurement</h4>
+<p>GKG stores source URLs rather than article text, so any text-based work over historical coverage depends on those URLs resolving. We sampled 200 distinct URLs at random from each of six case corpora (n = 1,200, fixed seed), resolved each with HEAD and a GET fallback where HEAD was refused, and scored non-resolution as rot.</p>
+
+<figure class="bleed" style="overflow-x:auto;margin:1.5rem 0">
+<table>
+<caption>Table 5. Link rot by archive age. Wilson score intervals; n = 200 per case.</caption>
+<thead><tr><th>Corpus</th><th>Age (years)</th><th>n</th><th>Dead</th><th>Rot</th><th>95% CI</th></tr></thead>
+<tbody>
+<tr><td>#EndBadGovernance 2024</td><td>2.1</td><td>200</td><td>67</td><td>33.5%</td><td>27.3&#8211;40.3</td></tr>
+<tr><td>Election 2023</td><td>3.5</td><td>200</td><td>79</td><td>39.5%</td><td>33.0&#8211;46.4</td></tr>
+<tr><td>Kankara 2020</td><td>5.8</td><td>200</td><td>97</td><td>48.5%</td><td>41.7&#8211;55.4</td></tr>
+<tr><td>#EndSARS 2020</td><td>5.9</td><td>200</td><td>106</td><td>53.0%</td><td>46.1&#8211;59.8</td></tr>
+<tr><td>Plateau 2018</td><td>8.2</td><td>200</td><td>128</td><td>64.0%</td><td>57.1&#8211;70.3</td></tr>
+<tr><td>Chibok 2014</td><td>12.4</td><td>200</td><td>138</td><td>69.0%</td><td>62.3&#8211;75.0</td></tr>
+</tbody>
+</table>
+</figure>
+
+<p>Rot is monotonic in age and fits an exponential survival curve closely: S(t) = exp(&#8722;0.0788t), R&#178; = 0.948, giving a half-life of 8.8 years. Extrapolated, 45.5% of sources survive at ten years and 20.7% at twenty. A third of sources are already unreachable two years after publication. Studies treating recent GDELT coverage as text-recoverable should verify rather than assume.</p>
+<p>These numbers align with the broader link rot literature. Pew Research Center (2024) found 25% of pages created between 2013 and 2023 already inaccessible. Sadatmoosavi, Khasseh and Tajedini (2026) tracked 2,886 citations over twenty years in Library and Information Science journals and found accessibility falling from 87% for citations under five years old to 38% for those over ten, with permanent link rot tripling from 5% in 2012 to 15% in 2025. Our 8.8-year half-life sits within the 8-to-10-year range these studies bracket.</p>
+
+<h4>4.2.6&nbsp;&nbsp;Rot is not uniform across source types, and runs opposite to expectation</h4>
+<p>An earlier iteration of this study asserted, from an n = 14 eyeball, that Nigerian outlets had decayed while international ones survived. That claim was withdrawn as unsupported. At n = 1,200 the effect is real, statistically clear, and runs in the opposite direction.</p>
+
+<figure class="bleed" style="overflow-x:auto;margin:1.5rem 0">
+<table>
+<caption>Table 6. Rot by source type, pooled across all six corpora.</caption>
+<thead><tr><th>Source type</th><th>n</th><th>Dead</th><th>Rot</th><th>95% CI</th></tr></thead>
+<tbody>
+<tr><td>Nigerian outlets</td><td>292</td><td>102</td><td>34.9%</td><td>29.7&#8211;40.6</td></tr>
+<tr><td>Other / unclassified</td><td>810</td><td>442</td><td>54.6%</td><td>51.1&#8211;58.0</td></tr>
+<tr><td>Syndication mills</td><td>66</td><td>48</td><td>72.7%</td><td>61.0&#8211;82.0</td></tr>
+<tr><td>International majors</td><td>32</td><td>23</td><td>71.9%</td><td>54.6&#8211;84.4</td></tr>
+</tbody>
+</table>
+</figure>
+
+<p>Nigerian 34.9% versus all non-Nigerian 56.5%; confidence intervals do not overlap. An interpretive caveat that matters more than the coefficient: HTTP status conflates two different events, a URL that moved and content that was destroyed. Major international outlets restructure URL schemes and migrate behind paywalls routinely; a dead reuters.com link frequently indicates relocation rather than loss. A dead link at a small local outlet more often means the outlet is gone. We report the reversal because the direction of the original claim mattered and was wrong; we do not claim to have measured differential preservation. The largest single contributor of dead links in the non-Nigerian group is allafrica.com (50 of 615 dead URLs), an aggregator that expires stories. Aggregators decay faster than the outlets they republish.</p>
+
+<h4>4.2.7&nbsp;&nbsp;A seventeen-day outage is correlated across all four products</h4>
+<p>Sections&nbsp;4.2.2 and&nbsp;4.2.3 together imply a reassuring structure: current-generation products have short histories, legacy products reach further back, and gaps differ between them, so redundancy across generations performs unintended preservation work. We found a counterexample, and we found it incidentally &mdash; while harvesting GKG v1 for an unrelated project in September 2026, two sampled days returned HTTP&nbsp;404.</p>
+
+<p>Probing outward established an outage present in <i>every</i> GDELT product we could test. The legacy daily files for GKG v1 and Events 1.0 are both absent for the eighteen days 2025-06-14 to 2025-07-01 inclusive. The current-generation 15-minute files for GKG 2.0 and Events 2.0 are absent from 2025-06-14 18:00 to 2025-07-02 02:00, a span of 17&nbsp;days 8&nbsp;hours and approximately 1,664 missing files. Edges were confirmed in both directions at 15-minute granularity: 2025-06-14 17:45 is present and 18:00 absent; 2025-07-02 01:45 is absent and 02:15 present. The outage was re-probed six days after first observation and persisted, so it is an archive state and not a transient fetch failure.</p>
+
+<figure class="bleed" style="overflow-x:auto;margin:1.5rem 0">
+<table>
+<caption>Table 7. The June&ndash;July 2025 outage across GDELT product generations.</caption>
+<thead><tr><th>Product</th><th>Granularity</th><th>Last present</th><th>First present after</th><th>Missing</th></tr></thead>
+<tbody>
+<tr><td>GKG v1</td><td>daily</td><td>2025-06-13</td><td>2025-07-02</td><td>18 days</td></tr>
+<tr><td>Events 1.0</td><td>daily</td><td>2025-06-13</td><td>2025-07-02</td><td>18 days</td></tr>
+<tr><td>GKG 2.0</td><td>15 minutes</td><td>2025-06-14 17:45</td><td>2025-07-02 02:15</td><td>17d 8h</td></tr>
+<tr><td>Events 2.0</td><td>15 minutes</td><td>2025-06-14 17:45</td><td>2025-07-02 02:15</td><td>17d 8h</td></tr>
+</tbody>
+</table>
+</figure>
+
+<p>Three things follow. First, the redundancy observed in Section&nbsp;4.2.3 is a convenience and not a guarantee: these gaps are correlated across generations because the generations share upstream infrastructure, and a study treating a second GDELT product as an independent check on the first will find that assumption fails exactly when it is most needed. Second, the differing edges are themselves a hazard. The legacy daily file for 2025-06-14 is absent although the current-generation files cover three-quarters of that day, so a researcher reconciling the two products encounters a day that exists in one and not the other &mdash; a build artefact, not a difference in coverage.</p>
+
+<p>Third, and most consequential for the argument of this paper: seventeen days of global news coding are missing from the most widely used open event dataset in the field, in the recent past, and we are aware of no published notice of it. Any study whose window spans June&ndash;July 2025 and which computes a rate, a baseline or a trend across that window is affected, and &mdash; as with every other defect reported here &mdash; nothing in the data announces the problem. A pipeline scoring a 404 as zero events will record a seventeen-day collapse in world conflict. We encountered precisely that risk: the harvester that found the gap recorded failed fetches as errors rather than zeros, and had it not, the finding would have surfaced as a plausible and entirely spurious decline in coverage.</p>
+
+<h3><span class="n">4.3</span>Access and Transport</h3>
+
+<h4>4.3.1&nbsp;&nbsp;Rate limiting returns HTTP 200</h4>
+<p>GDELT's published limit is one request per five seconds. Six-second spacing nonetheless earned a multi-minute penalty; fifteen seconds sustains. A throttled request returns status 200 carrying a plain-text notice, not 429, not JSON. Throttling must be detected by inspecting the body.</p>
+
+<h4>4.3.2&nbsp;&nbsp;Companion datasets have moved or closed</h4>
+<p>ACLED's documented host api.acleddata.com no longer resolves; the live base is acleddata.com/api/ with an OAuth2 password grant. Every path on that domain returned HTTP 403 with <code>cf-mitigated: challenge</code> to our research server. UCDP GED now requires an <code>x-ucdp-access-token</code> header not mentioned in older documentation. A design that assumes ground-truth triangulation should confirm access before committing to it.</p>
+
+<h3><span class="n">4.4</span>Field Semantics</h3>
+
+<h4>4.4.1&nbsp;&nbsp;Substring matching silently merges unrelated terms</h4>
+<p>SARS matched inside ENDSARS, collapsing two candidate keyword sets. <i>boko</i> matched the personal name <i>michael jk bokor</i>. <i>Jos</i> matched Jose and Joseph, inflating one ingest to 549,620 records. Word-boundary matching of the form <code>(?&lt;![a-z0-9])term(?![a-z0-9])</code> resolves all three, and additionally excludes TAX_RELIGION_PROTESTANT from a PROTEST query, a real hazard in the theme vocabulary.</p>
+
+<h4>4.4.2&nbsp;&nbsp;GKG entity strings are verbose and fragment referents</h4>
+<p>A single referent appears as multiple graph nodes. In our Chibok corpus the school appears as "chibok government girls secondary school" (618 mentions), "government girls secondary school in chibok" (343) and "chibok girls secondary school" (106). Any co-occurrence graph built on raw GKG entities splits one actor's centrality across duplicates and understates it. Entity resolution is not optional where the graph is load-bearing.</p>
+
+<h4>4.4.3&nbsp;&nbsp;SQLDATE is not the publication date</h4>
+<p>An Events row's SQLDATE records when the event is said to have occurred, often years before the article reporting it. The first row of the 2014-04-14 Events file carries SQLDATE 20040416, a 2004 event in a 2014 file. For any media-attention series the meaningful field is DATEADDED.</p>
+
+<h4>4.4.4&nbsp;&nbsp;Neither product carries what the other has</h4>
+<p>Events codes conflict intensity on the Goldstein scale but records no fatality counts. GKG carries themes, entities, counts, tone and source URLs but no article text. Fatality-based case selection requires ACLED, UCDP or EM-DAT; any text-based extraction over historical GKG must follow source URLs into link rot.</p>
+
+<h4>4.4.5&nbsp;&nbsp;The source composition has a trust ceiling</h4>
+<p>Across six corpora we observed 4,657 distinct source domains in a single window. Several high-volume domains in Nigerian coverage carry United States city names and maintain no local desk, indicating syndication mills rather than reporting. More fundamentally, a news archive can only ever record media. Where a study's construct assigns epistemic weight by transmitter type, community sources, official voices, civil society statements, those voices are structurally absent, and their absence is a property of the instrument rather than of the field. Raleigh, Kishi and Linke (2023) make the same point about conflict datasets more broadly: coding decisions do not merely measure the world, they produce particular representations of it, in which some actors and some forms of violence are systematically more visible than others.</p>
+
+<h3><span class="n">4.5</span>Detection Design</h3>
+
+<h4>4.5.1&nbsp;&nbsp;A 33% weekend trough interacts with persistence rules</h4>
+<p>Protest-coded events run 43.9 per day on weekdays and 29.3 at weekends, a 33.2% trough. In our data, raising persistence from two to three days reduced alarms from 52 to 18 with no loss of true detections. Alarm start-days: 18 Monday, 12 Tuesday, 9 Wednesday, 5 Thursday, 1 Friday, 0 Saturday, 4 Sunday. Persistence parameters in GDELT-based detection are not free choices; they encode assumptions about the news week.</p>
+
+<h4>4.5.2&nbsp;&nbsp;Fixed in-window baselines inflate lead times</h4>
+<p>A baseline drawn from the first n days of a window selected around a known trigger is not available to an operator in real time. Re-running detection with a trailing 28-day rolling baseline changed results materially: one case showing a +14-day lead produced no alarm at all, and the group hit rate fell from 3 of 3 to 2 of 3. A fixed baseline is defensible for asking whether a signal was present. It is inadmissible for claiming operational early warning. This is a concrete instance of what Kapoor and Narayanan (2023) called leakage: the spurious optimism that results when test conditions embed information the operational system would not have had.</p>
+
+<h4>4.5.3&nbsp;&nbsp;Lead time without an alarm rate is uninterpretable</h4>
+<p>A channel firing ten days before a crisis is worthless if it also fires fortnightly. Under a rolling baseline our best channel produced 18 alarms across 4,009 days, 1.65 per year. We recommend reporting alarms per unit time beside every lead-time claim, with a refractory period so that one sustained episode counts once.</p>
+
+<h4>4.5.4&nbsp;&nbsp;Ratio trends invert on signed scales</h4>
+<p>Goldstein is signed and sits near zero. A later-half/earlier-half ratio of two negative means produced 0.27 for a case whose conflict intensity was de-escalating. Use differences, not ratios, on any signed or zero-crossing series.</p>
+
+<h4>4.5.5&nbsp;&nbsp;Versioned specifications silently orphan their data</h4>
+<p>Where case specifications are versioned but data is not re-ingested, revising a specification creates a new version owning zero records. Every downstream series returns empty, with no error. This is the same silent-empty failure as Sections 4.1.1 and 4.2.1 arriving from a third direction.</p>
+
+<h2><span class="n">5</span>A Validation Protocol</h2>
+<p>The defects above convert into fourteen pre-flight checks, ordered by the cost of omitting them; the first would have caught our most consequential error.</p>
+<ol>
+<li>Validate every keyword against the corpus and fail the run if any term returns zero records.</li>
+<li>Name entities; do not describe events. Reserve theme codes for national-scale questions.</li>
+<li>Decompose any detection signal term by term before believing it.</li>
+<li>Use word-boundary matching everywhere, including ingest filters and entity matching.</li>
+<li>Probe the archive boundary for your date range directly; do not trust documentation.</li>
+<li>Treat HTTP 200 as possibly throttled; inspect the response body.</li>
+<li>Use DATEADDED, not SQLDATE, for attention series.</li>
+<li>Record gaps as rejected retrievals, never as absent days.</li>
+<li>Probe for mid-window outages, not only start-of-archive boundaries, and do so in every product you rely on. Gaps are correlated across GDELT&#8217;s product generations (Section&nbsp;4.2.7), so a second GDELT product is not an independent check on the first.</li>
+<li>Adjust for archive non-stationarity in any cross-period volume comparison.</li>
+<li>Use a rolling baseline for any operational claim; a fixed baseline only for "was a signal present."</li>
+<li>Report alarms per unit time beside every lead-time claim, with a refractory period.</li>
+<li>Use differences, not ratios, on signed series; log every retrieval with parameters and a response hash, failures included.</li>
+<li>If your design relies on retrieving article text through source URLs, sample and probe a subset of those URLs before building the pipeline.</li>
+</ol>
+
+<h2><span class="n">6</span>Discussion</h2>
+<p>Three implications follow.</p>
+<p>For individual studies, the keyword findings are immediately actionable and cheap. A validation gate costs a few lines and converts the most dangerous failure class into a startup error. The prior-salience confound is harder, because it cannot be fixed by better keywords. It is a property of what media attention is. It can only be surfaced, by term-level decomposition, and then reasoned about.</p>
+<p>For the literature, archive non-stationarity raises a question we cannot answer here. If GDELT's coverage density varies by a factor of 1.848 across a decade, then published findings comparing volumes across periods may partly reflect the archive's own growth and contraction. Weidmann (2016) showed that media coverage patterns are not neutral with respect to conflict intensity; these findings extend that concern to the temporal dimension. We do not claim any specific published result is affected; we claim the check is not currently standard and should be.</p>
+<p>For studies relying on source text, the decay curve sets a planning horizon. Any design that assumes article retrieval from historical GKG should expect to lose roughly half its sources by year nine. The Sadatmoosavi, Khasseh and Tajedini (2026) twenty-year LIS study confirms this is not specific to journalism: it is a property of the web as a scholarly infrastructure, and the rate of decay is accelerating, with each new cohort of articles decaying faster than the one before.</p>
+<p>For research infrastructure more broadly, the pattern in Section&nbsp;4.2 is worth naming in terms that the infrastructure literature can receive. GDELT's past is thinner than its present, the only products reaching the earliest periods are the superseded ones, and one product generation has lost a date another retains. This is not decay: the archive is actively maintained. It is a thinning of the past produced by modernisation, a form of forgetting that operates through maintenance and versioning rather than through neglect (Forteta, 2026a). Research infrastructures that upgrade their access layers should expect to lose the ability to examine their own histories, and should treat superseded generations as preservation assets rather than deprecated ones.</p>
+<p>This structural dynamic is what Star and Ruhleder (1996) identified as the fundamental paradox of infrastructure: it becomes invisible precisely when it works most smoothly, and its assumptions become visible only at breakdown. Borgman (2015) extended this to big data systems: the assumptions embedded in large research databases are inherited by every study that uses them. GDELT's silent failure modes are breakdowns of exactly this kind. They do not announce themselves because they are part of the infrastructure's normal operation.</p>
+<p>The link-rot finding extends the argument in a direction the current literature has not fully traced. URL decay is not random. Aggregators expire content faster than the outlets they republish. International majors restructure URL schemes, relocating rather than destroying. The pattern of what survives and what disappears is itself a structured social fact, not a neutral technical process. If certain source types, in particular smaller, local, non-Western outlets, suffer irreversible content loss when their URLs die rather than URL-migration loss, then the archive's preservation function is not neutral with respect to whose knowledge survives. The reversal in Table&nbsp;6 complicates the simple version of this argument: Nigerian outlets currently persist better than international majors, and the dominant failure mode in the non-Nigerian group is aggregator expiry, not outlet closure. But HTTP status cannot distinguish relocation from destruction, and the mechanisms are plausibly asymmetric across source types in ways that a properly powered follow-up, with Wayback Machine recovery rates computed per source type at adequate spacing, could resolve. The decay curve we have measured is the starting point, not the conclusion.</p>
+
+<h2><span class="n">7</span>Limitations</h2>
+<ul>
+<li><b>One country, one research programme.</b> All defects were found in Nigerian coverage during one study. Boundary and transport defects are plainly general; the keyword and source-composition findings may interact with how well-represented a country is in GDELT.</li>
+<li><b>Three vocabularies is not an exhaustive search.</b> A hybrid, theme codes intersected with a place filter rather than unioned, was not tried and may behave differently.</li>
+<li><b>Dated measurements.</b> Every finding describes GDELT as it behaved in September 2026. Boundaries, limits and field semantics change; the date-stamping throughout is deliberate and these claims carry a half-life.</li>
+<li><b>Wayback recoverability could not be measured.</b> Our first pass issued twelve concurrent requests and archive.org returned HTTP 429; a serial re-run at 1.6-second pacing was still refused. A recoverability study must be paced from the first request, not throttled after the fact.</li>
+<li><b>Link rot measures URL persistence, not preservation.</b> A dead link at a major outlet often indicates URL restructuring; at a small outlet it more often indicates closure. The source-type comparison in Section&nbsp;4.2.6 should be read with that asymmetry in mind.</li>
+<li><b>Defects were found opportunistically, not by systematic audit.</b> There is no reason to think twenty-four is the complete set. The outage in Section&nbsp;4.2.7 is the clearest evidence of that: it was found in September 2026, incidentally, during work with no connection to this paper, in data a year old at the time, and it had been sitting there unremarked the whole while.</li>
+</ul>
+
+<h2><span class="n">8</span>Conclusion</h2>
+<p>None of the findings here is a discovery about the world. They are facts about a tool, and most were found by hitting them rather than by looking for them.</p>
+<p>They are worth reporting because of what they share. A keyword that matches nothing returns an empty series. A throttled request returns HTTP 200. A pre-boundary date returns something indistinguishable from a quiet period. An orphaned specification version returns zero records. In each case the pipeline continues, and produces a series that plots cleanly, tabulates neatly, and supports a confident sentence in a results section.</p>
+<p>We published a finding built on a keyword set in which three of four terms matched nothing, and it looked exactly as sound as the findings that were real. The convention of compressing this material into a methods paragraph loses the part most likely to have determined the result.</p>
+
+<h2><span class="n">9</span>Data and Code Availability</h2>
+<p>The retrieval layer, analysis code, pre-registration documents, provenance database, and link-rot probe scripts are openly available at <a href="https://github.com/fortetaalvin/dcv-gdelt-instrument"><code>github.com/fortetaalvin/dcv-gdelt-instrument</code></a>, archived at Zenodo: <a href="https://doi.org/10.5281/zenodo.22801923"><code>10.5281/zenodo.22801923</code></a> (concept DOI, resolves to the latest version; this snapshot is <code>10.5281/zenodo.22801924</code>). Every figure traces to a logged retrieval carrying its endpoint, parameters and response hash. Boundary probes in Section&nbsp;4.2 are re-executable against the URLs given. The repository includes a <code>README</code> and requirements file sufficient to reproduce all retrievals and analyses from a clean environment. Migrating to a public repository rather than "available from the author" directly addresses the reproducibility norm gap documented by Ikeuchi and Imai (2026), who found fewer than 10% of recent empirical sociology articles provide publicly accessible replication packages.</p>
+
+<pre>git clone https://github.com/fortetaalvin/dcv-gdelt-instrument.git
+cd dcv-gdelt-instrument &amp;&amp; pip install requests
+python3 probes/boundary_probes.py      # re-execute every Section 4.2 claim
+python3 protocol/validate.py --help    # the Section 5 protocol as a checker</pre>
+
+<p>Two components run without credentials against public endpoints. <code>probes/boundary_probes.py</code> re-executes every archive-boundary claim and reports PASS/FAIL against the values recorded here, with a dated reference run committed alongside it; a mismatch indicates that GDELT&#8217;s behaviour has changed rather than that a claim was wrong, which is the purpose of dating them. <code>protocol/validate.py</code> implements the validation protocol as a checker rather than prose &#8212; run against this study&#8217;s own original Chibok keyword set it fails on <code>&#34;schoolgirls abduction&#34;</code>, the term that matched zero records and that we did not catch at the time.</p>
+
+<p><strong>Raw GDELT records are deliberately excluded</strong> (3.34&#160;million records, 16.4&#160;million aggregated events). Redistributing them would copy a large volume of a publicly available third-party dataset without aiding verification. The provenance database instead records the exact request behind every figure, so any number traces to its retrieval and that retrieval can be re-executed directly. Failed retrievals are included with the same fidelity as successes &#8212; 13 rejected, 7 error, 4 rate-limited &#8212; because an empty series and an unavailable series are different facts. Code is MIT-licensed; data and documents are CC&#160;BY&#160;4.0.</p>
+
+<h2><span class="n">10</span>References</h2>
+<ol>
+<li>Borgman, C. L. (2015). <i>Big data, little data, no data: Scholarship in the networked world.</i> MIT Press.</li>
+<li>Cederman, L., &amp; Weidmann, N. B. (2017). Predicting armed conflict: Time to adjust our expectations? <i>Science</i>, 355(6324), 474&#8211;476. https://doi.org/10.1126/science.aal4483</li>
+<li>Chadefaux, T. (2014). Early warning signals for war in the news. <i>Journal of Peace Research</i>, 51(1), 5&#8211;18. https://doi.org/10.1177/0022343313507302</li>
+<li>Cheng, Y., Cheng, D., &amp; Li, J. (2025). Research on the development and application of the GDELT event database. <i>Data</i>, 10(10), 158. https://doi.org/10.3390/data10100158</li>
+<li>Croicu, M., &amp; von der Maase, S. (2024). Media coverage and conflict reporting bias in Sub-Saharan Africa and Southeast Asia. Cited in: The Limits of LLM Forecasting (arXiv:2607.00018).</li>
+<li>Forteta, A. O. (2026a). Digital governance in disruptive contexts: A case in the Nigerian university system. PhD thesis, American University of Nigeria.</li>
+<li>Forteta, A. O. (2026b). Mobilisation and silence: Six Nigerian crises, narrative signal, and the one channel that held. Working paper, AUN Coding Hub.</li>
+<li>Goldstein, J. S. (1992). A conflict-cooperation scale for WEIS events data. <i>Journal of Conflict Resolution</i>, 36(2), 369&#8211;385. https://doi.org/10.1177/0022002792036002007</li>
+<li>Hegre, H., Allansson, M., Basedau, M., Colaresi, M., Croicu, M., Hultman, L., Johannsen, J., Melander, E., Morales, J. S., Naurin, E., von Uexkull, N., Vestby, J., &amp; Ward, M. (2019). ViEWS: A political violence early-warning system. <i>Journal of Peace Research</i>, 56(2), 155&#8211;174. https://doi.org/10.1177/0022343319823860</li>
+<li>Hegre, H., Bell, C., Colaresi, M., Croicu, M., Fjelde, H., Hoyles, F., Mouhleb, N., Ranheim, A., Randahl, D., Rypdal, M., &amp; Wig, T. (2021). ViEWS2020: Revising and evaluating the ViEWS political violence early-warning system. <i>Journal of Peace Research</i>, 58(3), 473&#8211;490. https://doi.org/10.1177/0022343320962157</li>
+<li>Hoffmann, M., Santos, F. G., Neumayer, C., &amp; Mercea, D. (2022). Lifting the veil on the use of big data news repositories: A documentation and critical discussion of a protest event analysis. <i>Communication Methods and Measures</i>, 16(4), 283&#8211;302. https://doi.org/10.1080/19312458.2022.2128099</li>
+<li>Ikeuchi, R., &amp; Imai, T. (2026). An empirical assessment of data sharing and computational reproducibility in sociology. <i>Royal Society Open Science</i>, 13(9), 260949. https://doi.org/10.1098/rsos.260949</li>
+<li>Kapoor, S., &amp; Narayanan, A. (2023). Leakage and the reproducibility crisis in machine-learning-based science. <i>Patterns</i>, 4(9), 100804. https://doi.org/10.1016/j.patter.2023.100804</li>
+<li>Leetaru, K., &amp; Schrodt, P. A. (2013). GDELT: Global data on events, location and tone, 1979&#8211;2012. ISA Annual Convention.</li>
+<li>Nemkova, P. A., Lingareddy, S. C., &amp; Albert, M. V. (2025). Do large language models know conflict? Investigating parametric vs. non-parametric knowledge of LLMs for conflict forecasting. arXiv:2505.09852.</li>
+<li>Pew Research Center (2024). <i>When online content disappears: Link rot and digital decay on government, news and other webpages.</i> https://www.pewresearch.org/data-labs/2024/05/17/when-online-content-disappears/</li>
+<li>Poli Nemkova, A., Ubani, S., Lingareddy, S. C., &amp; Albert, M. V. (2026). Are LLMs ready for conflict monitoring? Empirical evidence from West Africa. arXiv:2605.04177.</li>
+<li>Raleigh, C., Kishi, R., &amp; Linke, A. (2023). Political instability patterns are obscured by conflict dataset scope conditions, sources, and coding choices. <i>Humanities and Social Sciences Communications</i>, 10(1), 74. https://doi.org/10.1057/s41599-023-01559-4</li>
+<li>Raleigh, C., Linke, A., Hegre, H., &amp; Karlsen, J. (2010). Introducing ACLED: An armed conflict location and event dataset. <i>Journal of Peace Research</i>, 47(5), 651&#8211;660. https://doi.org/10.1177/0022343310378914</li>
+<li>Sadatmoosavi, A., Khasseh, A. A., &amp; Tajedini, O. (2026). Link rot in LIS literature: A 20-year study of web citation decay, recovery and preservation challenges. <i>Aslib Journal of Information Management</i>, ahead-of-print. https://doi.org/10.1108/AJIM-05-2025-0286</li>
+<li>Schoch, D., Chan, C., Wagner, C., &amp; Breuer, J. (2024). Computational reproducibility in computational social science. <i>EPJ Data Science</i>, 13, 75. https://doi.org/10.1140/epjds/s13688-024-00514-w</li>
+<li>Schrodt, P. A. (2012). Precedents, progress and prospects in the automated coding of political event data. <i>International Interactions</i>, 38(4), 546&#8211;569. https://doi.org/10.1080/03050629.2012.697430</li>
+<li>Star, S. L., &amp; Ruhleder, K. (1996). Steps toward an ecology of infrastructure: Design and access for large information spaces. <i>Information Systems Research</i>, 7(1), 111&#8211;134. https://doi.org/10.1287/isre.7.1.111</li>
+<li>Sundberg, R., &amp; Melander, E. (2013). Introducing the UCDP georeferenced event dataset. <i>Journal of Peace Research</i>, 50(4), 523&#8211;532. https://doi.org/10.1177/0022343313484347</li>
+<li>Wang, W., Kennedy, R., Lazer, D., &amp; Ramakrishnan, N. (2016). Growing pains for global monitoring of societal events. <i>Science</i>, 353(6307), 1502&#8211;1503. https://doi.org/10.1126/science.aaf6758</li>
+<li>Weidmann, N. B. (2016). A closer look at reporting bias in conflict event data. <i>American Journal of Political Science</i>, 60(1), 206&#8211;218. https://doi.org/10.1111/ajps.12196</li>
+<li>Zebrowski, P., &amp; Afli, H. (2024). Predicting social unrest and political risk using GDELT. In <i>Proceedings of SBP-BRiMS 2025</i>. Working paper.</li>
+</ol>
+
+<p style="font-size:.85rem;color:var(--mute);border-top:1px solid var(--rule);padding-top:1rem;margin-top:2rem">Preprint v2.2 &middot; September 2026. Measurements taken against live GDELT, ACLED, UCDP and ViEWS endpoints, 15&#8211;16 September 2026, from 4,943 provenance-logged retrievals. All claims are date-stamped; boundaries and limits change.</p>
+
+<p style="font-size:.85rem;color:var(--mute);margin-top:.6rem"><strong>Canonical repository:</strong> <a href="https://github.com/fortetaalvin/dcv-gdelt-instrument">github.com/fortetaalvin/dcv-gdelt-instrument</a> &#8212; replication materials, provenance database, pre-registrations and re-executable probes. This document is the living version of the preprint; the repository is the authoritative source for everything it reports.</p>
+
+</div>
+
+<script>
+const root=document.documentElement, tt=document.getElementById('tt');
+try{const v=localStorage.getItem('dcv-methods-theme'); if(v)root.setAttribute('data-theme',v);}catch(e){}
+if(tt) tt.addEventListener('click',()=>{
+  const cur=root.getAttribute('data-theme');
+  const sys=window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const next=cur?(cur==='dark'?'light':'dark'):(sys?'light':'dark');
+  root.setAttribute('data-theme',next);
+  try{localStorage.setItem('dcv-methods-theme',next);}catch(e){}
+});
+</script>
+
